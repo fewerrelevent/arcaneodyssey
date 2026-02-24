@@ -351,12 +351,16 @@ let chart;
 let currentItem = "";
 
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/History")
+
   .then(r => r.json())
-  .then(d => history = d.map(h => ({
-    ...h,
-    value: +h.value,
-    date: new Date(h.date + "T00:00:00Z")
-  })));
+  .then(d => {
+    history = d.map(h => ({
+      ...h,
+      value: +h.value,
+      date: new Date(h.date + "T00:00:00Z")
+    }));
+    historyLoaded = true;
+  });
 
 function openChart(name) {
   trackItemView(name);

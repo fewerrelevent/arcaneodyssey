@@ -260,10 +260,13 @@ function renderItems() {
               <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
             </svg>
           </button>
-          <span style="cursor:pointer;color:#60a5fa"
-      onclick="openChart('${i.name.replace(/'/g,"\\'")}')">
-  ${i.name}
-</span>
+          const nameSpan = document.createElement("span");
+          nameSpan.style.cursor = "pointer";
+          nameSpan.style.color = "#60a5fa";
+          nameSpan.textContent = i.name;
+          nameSpan.addEventListener("click", () => openChart(i.name));
+          
+          tdNameCell.appendChild(nameSpan);
 
         </div>
       </td>
@@ -351,12 +354,16 @@ let chart;
 let currentItem = "";
 
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/History")
+
   .then(r => r.json())
-  .then(d => history = d.map(h => ({
-    ...h,
-    value: +h.value,
-    date: new Date(h.date + "T00:00:00Z")
-  })));
+  .then(d => {
+    history = d.map(h => ({
+      ...h,
+      value: +h.value,
+      date: new Date(h.date + "T00:00:00Z")
+    }));
+    historyLoaded = true;
+  });
 
 function openChart(name) {
   trackItemView(name);

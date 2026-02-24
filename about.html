@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Paramount Trade Calculator</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1b1f2d);
+  color: #e5e7eb;
+  padding: 20px;
+  user-select: none;
+  margin: 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+h1::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  margin: 6px auto 0;
+  border-radius: 3px;
+}
+
+.search-container { margin-bottom: 15px; width: 500px; }
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 1px solid #1e293b;
+  background: #020617;
+  color: #e5e7eb;
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 1px #6366f1;
+}
+
+.item-list {
+  width: 500px;
+  background: linear-gradient(180deg,#020617,#020617cc);
+  margin-bottom: 25px;
+  padding: 12px;
+  border-radius: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.item {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e293b;
+  position: relative;
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+.item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 8px #6366f1;
+}
+
+.item img {
+  border-radius: 0;  
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+}
+
+
+
+.item.dragging { opacity: 0.5; }
+
+.trade-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 15px;
+  flex-wrap: nowrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(2, 100px);
+  gap: 10px;
+  background: linear-gradient(90deg,#111827,#0f172a);
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.grid-cell {
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  background: #020617cc;
+  border: 2px dashed #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 6px;
+  flex-direction: column;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.grid-cell.highlight { background: #334155; border-color: #6366f1; }
+
+.grid-cell img {
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+  margin: auto;
+}
+
+
+.stack-count {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 16px;
+  background: rgba(0,0,0,0.6);
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+  user-select: none;
+}
+
+#resetTrade {
+  margin-top: 10px;
+  padding: 10px 16px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg,#1e293b,#0f172a);
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.05s;
+}
+#resetTrade:hover { background: linear-gradient(180deg,#334155,#1e293b); }
+#resetTrade:active { transform: translateY(1px); }
+
+.difference {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+.tooltip {
+  position: fixed;
+  background: rgba(30,41,59,0.95);
+  color: #e5e7eb;
+  padding: 6px 10px;
+  border-radius: 6px;
+  pointer-events: none;
+  font-size: 0.95em;
+  z-index: 9999;
+  display: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+#contextMenu {
+  position: absolute;
+  display: none;
+  background: linear-gradient(180deg,#1e293b,#0f172a);
+  border: 1px solid #334155;
+  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  z-index: 10000;
+  min-width: 180px;
+}
+#contextMenu input {
+  width: 60px;
+  margin-left: 5px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #e5e7eb;
+}
+#contextMenu button {
+  padding: 6px 10px;
+  margin-top: 6px;
+  margin-right: 5px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(180deg,#334155,#1e293b);
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#contextMenu button:hover { background: linear-gradient(180deg,#6366f1,#22d3ee); }
+
+.info-panel {
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  width: 220px;
+  background: linear-gradient(180deg,#1e293b,#0f172a);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  font-size: 0.95em;
+  color: #e5e7eb;
+  line-height: 1.4em;
+  z-index: 5000;
+}
+.info-panel strong { color: #6366f1; }
+
+.trade-side {
+  min-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trade-title { height: 32px; }
+.total { height: 28px; }
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-info {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: #94a3b8;
+  user-select: none;
+}
+.close-info:hover { color: #ef4444; }
+
+@media (max-width: 768px) {
+  .trade-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+  .difference {
+    align-self: center;
+    margin: 10px 0;
+  }
+  .trade-side {
+    min-width: unset;
+    width: 100%;
+  }
+  .info-panel {
+    width: 90%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: auto;
+    bottom: 20px;
+  }
+}
+
+
+/* ===== MOBILE TOUCH SUPPORT ===== */
+@media (pointer: coarse) {
+  .item {
+    width: 90px;
+    height: 90px;
+  }
+
+  .grid-cell {
+    width: 110px;
+    height: 110px;
+  }
+
+  .remove-btn {
+    font-size: 22px;
+    padding: 6px;
+  }
+
+  button {
+    min-height: 44px;
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+  <!-- ===== TOP NAVIGATION ===== -->
+<div class="top-nav">
+  <div class="nav-left">Paramount Exchange</div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="index.html">Value List</a>
+    <a href="about.html" class="active">Trade Calculator</a>
+    <a href="#">Submit Values</a>
+    <a href="#">Other Links</a>
+  </div>
+</div>
+
+<h1>Paramount Trade Calculator</h1>
+
+<div class="main-content">
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search items...">
+  </div>
+
+  <div class="item-list" id="itemList"></div>
+
+  <div class="trade-container">
+    <div class="trade-side">
+      <div class="trade-title">Items You Will Give</div>
+      <div class="total" id="total1">Total: 0</div>
+      <div class="grid" id="player1Grid">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+      </div>
+    </div>
+
+    <div class="difference" id="difference">+0</div>
+
+    <div class="trade-side">
+      <div class="trade-title">Items You Will Receive</div>
+      <div class="total" id="total2">Total: 0</div>
+      <div class="grid" id="player2Grid">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+  <div class="galleon-box">
+<input type="number" id="galleons1" placeholder="Galleons" min="0" max="250000000">
+  </div>
+
+  <button id="resetTrade">Reset Trade</button>
+
+  <div class="galleon-box">
+<input type="number" id="galleons2" placeholder="Galleons" min="0" max="250000000">
+  </div>
+</div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<div id="contextMenu">
+  <div>Quantity: <input type="number" id="ctxQuantity" value="1" min="1" max="500"></div>
+  <div>
+    <button id="addLeftBtn">Add to Give</button>
+    <button id="addRightBtn">Add to Receive</button>
+  </div>
+</div>
+
+
+<div class="info-panel" id="infoPanel">
+  <div class="info-header">
+    <strong>Tip:</strong>
+    <span class="close-info" id="closeInfo">×</span>
+  </div>
+  <br>
+  Right-click (or long-press) on any item to add in <strong>bulk</strong>!<br>
+  Choose the side ("Give" or "Receive") and quantity (up to 500 at a time).<br><br>
+  Shift + click the red × removes <strong>all items</strong> instantly.
+</div>
+
+
+
+<script>
+const sheetURL = "https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/Sheet1";
+let items=[], draggedItem=null, draggedFromGrid=false, rightClickedItem=null;
+const itemList=document.getElementById("itemList");
+const grids=[document.getElementById("player1Grid"), document.getElementById("player2Grid")];
+const total1=document.getElementById("total1"), total2=document.getElementById("total2");
+const difference=document.getElementById("difference");
+const resetTrade=document.getElementById("resetTrade");
+const tooltip=document.getElementById("tooltip");
+const searchInput=document.getElementById("searchInput");
+const contextMenu=document.getElementById("contextMenu");
+const ctxQuantity=document.getElementById("ctxQuantity");
+const addLeftBtn=document.getElementById("addLeftBtn");
+const addRightBtn=document.getElementById("addRightBtn");
+let touchDraggedItem = null;
+let touchDragFromGrid = false;
+
+
+ctxQuantity.addEventListener("click", e => {
+  e.stopPropagation();
+});
+
+ctxQuantity.addEventListener("mousedown", e => {
+  e.stopPropagation();
+});
+
+ctxQuantity.addEventListener("input", () => {
+  let value = Number(ctxQuantity.value);
+
+  if (value > 500) ctxQuantity.value = 500;
+  if (value < 1 || isNaN(value)) ctxQuantity.value = 1;
+});
+
+
+// Fetch items
+fetch(sheetURL).then(res=>res.json()).then(data=>{
+  items=data.map(item=>({...item,value:Number(item.value),sunken:item.sunken==="TRUE",bossDrop:item.bossDrop==="TRUE"}));
+  populateItems();
+}).catch(err=>console.error(err));
+
+function populateItems(search=""){
+  itemList.innerHTML="";
+  items.filter(i=>i.name.toLowerCase().includes(search.toLowerCase())).forEach(item=>{
+    const div=document.createElement("div"); div.className="item"; div.draggable=true;
+    div.dataset.name=item.name; div.dataset.value=item.value; div.dataset.image=item.image;
+    div.dataset.category=item.category; div.dataset.rarity=item.rarity;
+    const img=document.createElement("img"); img.src=item.image; img.alt=item.name; div.appendChild(img);
+
+    div.addEventListener("mouseenter",()=>{ tooltip.innerHTML=`<strong>${item.name}</strong>
+<br>Value: ${item.value.toLocaleString()}<br>Category: ${item.category}<br>Rarity: ${item.rarity}`; tooltip.style.display="block"; });
+    div.addEventListener("mousemove", e=>{ tooltip.style.left=e.clientX+15+"px"; tooltip.style.top=e.clientY+6+"px"; });
+    div.addEventListener("mouseleave",()=>tooltip.style.display="none");
+    div.addEventListener("dragstart", ()=>{ draggedItem=div; draggedFromGrid=false; setTimeout(()=>div.classList.add("dragging"),0); });
+    div.addEventListener("dragend", ()=>{ div.classList.remove("dragging"); draggedItem=null; });
+
+    // Right-click / long-press for mobile
+    let pressTimer;
+    const showMenu=e=>{
+      e.preventDefault();
+      rightClickedItem=div;
+      contextMenu.style.display="block";
+      contextMenu.style.left=(e.pageX||e.touches[0].pageX)+"px";
+      contextMenu.style.top=(e.pageY||e.touches[0].pageY)+"px";
+      ctxQuantity.value=1;
+    };
+    div.addEventListener("contextmenu", showMenu);
+    div.addEventListener("touchstart", e=>{ pressTimer=setTimeout(()=>showMenu(e),500); });
+    div.addEventListener("touchend", ()=>clearTimeout(pressTimer));
+
+div.addEventListener("touchstart", e => {
+  const t = e.touches[0];
+
+  const timer = setTimeout(() => {
+    tooltip.innerHTML = `
+      <strong>${item.name}</strong><br>
+      Value: ${item.value.toLocaleString()}<br>
+      Category: ${item.category}<br>
+      Rarity: ${item.rarity}
+    `;
+    tooltip.style.left = t.clientX + 10 + "px";
+    tooltip.style.top = t.clientY + 10 + "px";
+    tooltip.style.display = "block";
+
+    setTimeout(() => tooltip.style.display = "none", 2000);
+  }, 350);
+
+  div.addEventListener("touchend", () => clearTimeout(timer), { once: true });
+});
+
+
+    itemList.appendChild(div);
+  });
+}
+
+
+contextMenu.addEventListener("click", e => {
+  e.stopPropagation();
+});
+
+contextMenu.addEventListener("mousedown", e => {
+  e.stopPropagation();
+});
+
+
+
+// Function addToGrid, drag/drop, totals, reset, context menu buttons...
+
+// Add item to grid
+function addToGrid(grid, item, count=1){
+  count = Math.min(count, 500);
+  let cell = Array.from(grid.querySelectorAll(".grid-cell")).find(c=>{
+    const img = c.querySelector("img");
+    return img && img.dataset.name===item.dataset.name;
+  });
+
+  if(cell){
+    const img = cell.querySelector("img");
+    img.dataset.count = Number(img.dataset.count||1)+count;
+    cell.querySelector(".stack-count").textContent = img.dataset.count;
+  } else {
+let emptyCell = Array.from(grid.querySelectorAll(".grid-cell"))
+  .find(c => !c.querySelector("img"));
+
+    if(!emptyCell) return;
+    const img = document.createElement("img");
+    img.src = item.dataset.image;
+    img.alt = item.dataset.name;
+    img.dataset.name = item.dataset.name;
+    img.dataset.unitValue = item.dataset.value;
+    img.dataset.count = count;
+   img.dataset.category = item.dataset.category;
+   img.dataset.rarity = item.dataset.rarity;
+
+    const sc = document.createElement("div");
+    sc.className = "stack-count";
+    sc.textContent = count;
+
+    const removeBtn = document.createElement("div");
+    removeBtn.className = "remove-btn";
+    removeBtn.textContent = "×";
+    removeBtn.addEventListener("click", (e)=>{
+      if(e.shiftKey){
+        emptyCell.innerHTML="";
+      } else if(img.dataset.count>1){
+        img.dataset.count--;
+        sc.textContent = img.dataset.count;
+      } else emptyCell.innerHTML="";
+      updateTotals();
+    });
+
+    emptyCell.appendChild(img);
+    emptyCell.appendChild(sc);
+    emptyCell.appendChild(removeBtn);
+
+    img.draggable=true;
+    img.addEventListener("dragstart", ()=>{ draggedItem=img; draggedFromGrid=true; setTimeout(()=>img.classList.add("dragging"),0); });
+    img.addEventListener("dragend", ()=>{ draggedItem.classList.remove("dragging"); draggedItem=null; });
+
+    img.addEventListener("mouseenter", e=>{
+      tooltip.innerHTML = `<strong>${item.name}</strong>
+<br>Value: ${(Number(img.dataset.unitValue) * Number(img.dataset.count)).toLocaleString()}
+<br>Category: ${img.dataset.category}
+<br>Rarity: ${img.dataset.rarity}
+<br>Count: ${img.dataset.count}`;
+      tooltip.style.display="block";
+    });
+    img.addEventListener("mousemove", e=>{
+      tooltip.style.left = e.clientX+15+"px";
+      tooltip.style.top = e.clientY+6+"px";
+    });
+    img.addEventListener("mouseleave", ()=>tooltip.style.display="none");
+  }
+  updateTotals();
+}
+document.addEventListener("touchstart", e => {
+  const itemEl = e.target.closest(".item img, .item, .grid-cell img");
+  if (!itemEl) return;
+
+  // Inventory item
+  if (itemEl.classList.contains("item")) {
+    touchDraggedItem = itemEl;
+    touchDragFromGrid = false;
+  }
+
+  // Grid item
+  if (itemEl.tagName === "IMG" && itemEl.closest(".grid-cell")) {
+    touchDraggedItem = itemEl;
+    touchDragFromGrid = true;
+  }
+}, { passive: true });
+
+
+// Drag & drop
+grids.forEach(grid=>{
+  grid.querySelectorAll(".grid-cell").forEach(cell=>{
+    cell.addEventListener("dragover", e=>{ e.preventDefault(); cell.classList.add("highlight"); });
+    cell.addEventListener("dragleave", ()=>cell.classList.remove("highlight"));
+    cell.addEventListener("drop", ()=>{
+      cell.classList.remove("highlight");
+      if(!draggedItem) return;
+      if(!draggedFromGrid){
+        addToGrid(grid, draggedItem);
+      } else {
+        const oldCell = draggedItem.parentElement;
+        const count = Number(draggedItem.dataset.count);
+        const existing = cell.querySelector(`img[data-name="${draggedItem.dataset.name}"]`);
+        if(existing){
+          existing.dataset.count = Number(existing.dataset.count)+count;
+          existing.nextSibling.textContent = existing.dataset.count;
+          oldCell.innerHTML="";
+} else if(!cell.querySelector("img")){
+  cell.innerHTML = oldCell.innerHTML;
+  oldCell.innerHTML = "";
+}
+document.addEventListener("touchmove", e => {
+  if (!touchDraggedItem) return;
+
+  e.preventDefault();
+
+  const touch = e.touches[0];
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  const cell = el?.closest(".grid-cell");
+
+  document.querySelectorAll(".grid-cell")
+    .forEach(c => c.classList.remove("highlight"));
+
+  if (cell) cell.classList.add("highlight");
+}, { passive: false });
+
+document.addEventListener("touchend", e => {
+  if (!touchDraggedItem) return;
+
+  const touch = e.changedTouches[0];
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  const cell = el?.closest(".grid-cell");
+
+  document.querySelectorAll(".grid-cell")
+    .forEach(c => c.classList.remove("highlight"));
+
+  if (cell) {
+    const grid = cell.closest(".grid");
+
+    if (!touchDragFromGrid) {
+      // Inventory → grid
+      addToGrid(grid, touchDraggedItem);
+    } else {
+      // Grid → grid (move stack)
+      const oldCell = touchDraggedItem.parentElement;
+      const count = Number(touchDraggedItem.dataset.count || 1);
+      const existing = cell.querySelector(
+        `img[data-name="${touchDraggedItem.dataset.name}"]`
+      );
+
+      if (existing) {
+        existing.dataset.count =
+          Number(existing.dataset.count) + count;
+        existing.nextSibling.textContent = existing.dataset.count;
+        oldCell.innerHTML = "";
+      } else if (!cell.querySelector("img")) {
+        cell.innerHTML = oldCell.innerHTML;
+        oldCell.innerHTML = "";
+      }
+
+      updateTotals();
+    }
+  }
+
+  touchDraggedItem = null;
+  touchDragFromGrid = false;
+});
+
+
+        updateTotals();
+      }
+    });
+  });
+});
+
+// Totals
+function updateTotals(){
+  const calc = grid =>
+    Array.from(grid.querySelectorAll("img"))
+      .reduce((sum, img) =>
+        sum + Number(img.dataset.unitValue) * Number(img.dataset.count), 0);
+
+  const g1 = Number(document.getElementById("galleons1").value) || 0;
+  const g2 = Number(document.getElementById("galleons2").value) || 0;
+
+  const t1 = calc(grids[0]) + g1;
+  const t2 = calc(grids[1]) + g2;
+
+  total1.textContent = `Total: ${t1.toLocaleString()}`;
+  total2.textContent = `Total: ${t2.toLocaleString()}`;
+
+  const diff = t2 - t1;
+  difference.textContent = (diff > 0 ? "+" : "") + diff.toLocaleString();
+
+  if (diff > 0) {
+    difference.style.color = "#22c55e";
+  } else if (diff < 0) {
+    difference.style.color = "#ef4444";
+  } else {
+    difference.style.color = "#e5e7eb";
+  }
+}
+// Reset button (outside updateTotals)
+resetTrade.addEventListener("click", ()=>{
+  grids.forEach(g =>
+    g.querySelectorAll(".grid-cell").forEach(c => c.innerHTML = "")
+  );
+
+  galleon1.value = 0;
+  galleon2.value = 0;
+
+  updateTotals();
+});
+
+
+// Context menu
+addLeftBtn.addEventListener("click", ()=>{
+  if(!rightClickedItem) return;
+  addToGrid(grids[0], rightClickedItem, Number(ctxQuantity.value));
+  contextMenu.style.display="none";
+});
+addRightBtn.addEventListener("click", ()=>{
+  if(!rightClickedItem) return;
+  addToGrid(grids[1], rightClickedItem, Number(ctxQuantity.value));
+  contextMenu.style.display="none";
+});
+
+document.addEventListener("click", ()=>contextMenu.style.display="none");
+
+// Search
+searchInput.addEventListener("input", ()=>populateItems(searchInput.value));
+
+const galleon1 = document.getElementById("galleons1");
+const galleon2 = document.getElementById("galleons2");
+
+function validateGalleons(input) {
+  let value = Number(input.value);
+
+  if (isNaN(value) || value < 0) value = 0;
+  if (value > 250000000) value = 250000000;
+
+  input.value = value;
+}
+
+galleon1.addEventListener("input", () => {
+  validateGalleons(galleon1);
+  updateTotals();
+});
+
+galleon2.addEventListener("input", () => {
+  validateGalleons(galleon2);
+  updateTotals();
+});
+
+const infoPanel = document.getElementById("infoPanel");
+const closeInfo = document.getElementById("closeInfo");
+
+// Restore hidden state
+if (localStorage.getItem("infoPanelClosed") === "true") {
+  infoPanel.style.display = "none";
+}
+
+closeInfo.addEventListener("click", () => {
+  infoPanel.style.display = "none";
+  localStorage.setItem("infoPanelClosed", "true");
+});
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+

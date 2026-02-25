@@ -565,3 +565,26 @@ td:first-child {
   transform: translateY(-5px);
   box-shadow: 0 0 15px rgba(34,211,238,0.3);
 }
+
+html, body {
+  min-height: 100%;
+  background: linear-gradient(135deg, #0f172a, #1b1f2d);
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

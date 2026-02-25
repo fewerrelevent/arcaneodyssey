@@ -325,6 +325,24 @@ td:first-child {
   box-shadow: 0 0 0 1px #6366f1;
 }
 
+
+/* ===== DISCORD BUTTON ===== */
+.discord-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 12px 22px;
+  background: #5865F2;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.discord-btn:hover {
+  background: #4752c4;
+  transform: translateY(-2px);
+}
 /* ===== BADGES ===== */
 .badge {
   padding: 3px 8px;
@@ -457,12 +475,14 @@ td:first-child {
 
 .hero {
   position: relative;
-  height: 90vh;
-  background: url("banner.webp") center/cover no-repeat;
+  height: 100vh;
+  background-image: url("banner.webp");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
 }
 
 .hero-overlay {
@@ -551,18 +571,16 @@ td:first-child {
   margin: auto;
 }
 
-.service-card {
-  background: linear-gradient(180deg, #1e293b, #1b1f2d);
-  padding: 20px;
-  border-radius: 14px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  cursor: pointer;
+.service-item {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 12px 0;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
 }
 
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px rgba(34,211,238,0.3);
+.service-item:hover {
+  opacity: 1;
 }
 
 html, body {
@@ -591,3 +609,4 @@ html, body {
 html {
   scrollbar-gutter: stable;
 }
+

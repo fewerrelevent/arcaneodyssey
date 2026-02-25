@@ -57,12 +57,12 @@
   <div class="service-item">Gilded Brewing</div>
 </div>
 
+  </section>
+
 <!-- ===== DISCORD BUTTON =====    -->
 <a href="https://discord.gg/AGWXYeU2fC" target="_blank" class="discord-btn">
   Join The Community
 </a>
-  </section>
-
 
 <script>
   const hero = document.querySelector('.hero');
@@ -71,6 +71,14 @@
     const scrollY = window.scrollY;
     // Move background at 50% of scroll speed
     hero.style.backgroundPosition = `center ${scrollY * 0.5}px`;
+  });
+
+  
+  const services = document.querySelector('.services-section');
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    services.style.backgroundPosition = `center ${scrollY * 0.2}px`;
   });
 </script>
 

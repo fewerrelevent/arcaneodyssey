@@ -480,8 +480,12 @@ td:first-child {
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #f1f5f9;
+  overflow: hidden;
 }
 
 .hero-overlay {
@@ -490,34 +494,24 @@ td:first-child {
   background: linear-gradient(
     to bottom,
     rgba(15,23,42,0.6),
-    rgba(15,23,42,0.9)
+    rgba(15,23,42,0.95)
   );
 }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  padding: 20px;
-}
-
-.hero-logo {
-  width: 140px;
-  margin-bottom: 20px;
-}
-
 .hero h1 {
-  font-size: 42px;
+  font-size: 48px;
   margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .hero-sub {
-  font-size: 18px;
+  font-size: 20px;
   color: #cbd5e1;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
+  max-width: 600px;
+  line-height: 1.5;
 }
-
-/* ===== HERO BUTTONS ===== */
 
 .hero-buttons {
   display: flex;
@@ -553,39 +547,42 @@ td:first-child {
 /* ===== SERVICES SECTION ===== */
 
 .services-section {
-  padding: 80px 20px;
+  padding: 100px 20px;
   text-align: center;
-
   background: linear-gradient(180deg, #111827, #0f172a);
   border-top: 1px solid #334155;
   border-bottom: 1px solid #334155;
 }
+
 .services-section h2 {
-  font-size: 28px;
-  margin-bottom: 40px;
+  font-size: 32px;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  max-width: 900px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
   margin: auto;
 }
 
 .service-item {
-  background: #1e293b;
-  border-radius: 14px;
-  padding: 20px;
+  background: linear-gradient(135deg, #1e293b, #1b1f2d);
+  border-radius: 16px;
+  padding: 28px 20px;
   font-size: 18px;
   font-weight: 600;
-  opacity: 0.9;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  opacity: 0.95;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  color: #f1f5f9;
+  text-align: center;
 }
 
 .service-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(34,211,238,0.3);
   opacity: 1;
 }
 
@@ -616,3 +613,21 @@ html {
   scrollbar-gutter: stable;
 }
 
+
+.discord-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  background: #5865F2;
+  color: white;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(88,101,242,0.4);
+}
+
+.discord-btn:hover {
+  background: #4752c4;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(88,101,242,0.6);
+}

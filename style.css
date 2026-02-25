@@ -454,3 +454,114 @@ td:first-child {
 .sort-btn.desc::after {
   transform: translateY(-50%) rotate(180deg);
 }
+/* ===== HERO SECTION ===== */
+
+.hero {
+  position: relative;
+  height: 90vh;
+  background: url("banner.webp") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,23,42,0.6),
+    rgba(15,23,42,0.9)
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero-logo {
+  width: 140px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: #cbd5e1;
+  margin-bottom: 30px;
+}
+
+/* ===== HERO BUTTONS ===== */
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  background: #6366f1;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+
+.hero-btn.secondary {
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+.hero-btn.secondary:hover {
+  background: #273449;
+}
+
+/* ===== SERVICES SECTION ===== */
+
+.services-section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.services-section h2 {
+  font-size: 28px;
+  margin-bottom: 40px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.service-card {
+  background: linear-gradient(180deg, #1e293b, #1b1f2d);
+  padding: 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(34,211,238,0.3);
+}

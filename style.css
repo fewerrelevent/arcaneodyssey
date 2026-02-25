@@ -1,18 +1,19 @@
 /* ===== GOOGLE FONT ===== */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-
-/* ===== BASE STYLES ===== */
-
+/* ===== GLOBAL STYLES ===== */
 html {
-  background-color: #0f172a; /* solid fallback */
-  background-image: linear-gradient(135deg, #0f172a, #1b1f2d);
-  min-height: 100%;
+  overflow-y: scroll;
 }
 
 body {
-  min-height: 100%;
-  background: transparent; /* let html control background */
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1b1f2d);
+  color: #e5e7eb;
+  margin: 0;
+  padding: 24px;
+  padding-top: 100px; /* accounts for fixed navbar */
+  text-align: center;
 }
 /* ===== HEADERS ===== */
 h1 {

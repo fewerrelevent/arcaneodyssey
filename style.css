@@ -556,8 +556,11 @@ td:first-child {
 .services-section {
   padding: 80px 20px;
   text-align: center;
-}
 
+  background: linear-gradient(180deg, #111827, #0f172a);
+  border-top: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+}
 .services-section h2 {
   font-size: 28px;
   margin-bottom: 40px;

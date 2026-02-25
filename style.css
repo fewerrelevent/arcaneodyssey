@@ -624,3 +624,16 @@ html {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 6px 20px rgba(88,101,242,0.6);
 }
+
+.hero-logo {
+  width: 100px; /* smaller than before */
+  max-width: 25%; /* ensures it doesn't grow too big on large screens */
+  height: auto;   /* maintains aspect ratio */
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero-logo {
+    width: 80px;
+  }
+}

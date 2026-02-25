@@ -3,12 +3,8 @@
 <head>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="stylesheet" href="style.css">
-
 <meta charset="UTF-8">
 <title>The Paramount Exchange</title>
-</script>
-
-
 </head>
 
 <body>
@@ -227,7 +223,7 @@ function renderItems() {
   table.innerHTML = "";
 
   let filtered = items.filter(i =>
-   i.nameLower.includes(state.search)  &&
+    i.nameLower.includes(state.search) &&
     (!state.category || i.category === state.category) &&
     (!state.rarities.size || state.rarities.has(i.rarity)) &&
     (!state.boss || i.bossDrop) &&
@@ -250,27 +246,31 @@ function renderItems() {
 
   filtered.forEach(i => {
     const tr = document.createElement("tr");
+
     tr.innerHTML = `
       <td><img class="item-image" src="${i.image||''}" onerror="this.src='https://via.placeholder.com/64?text=?'"></td>
       <td style="text-align:left">
         <div class="item-name-cell">
-          <button class="bookmark-btn ${bookmarks.has(i.name) ? "active" : ""}"
-            onclick="toggleBookmark('${i.name.replace(/'/g,"\\'")}')">
+          <button class="bookmark-btn ${bookmarks.has(i.name) ? "active" : ""}">
             <svg viewBox="0 0 24 24">
               <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
             </svg>
           </button>
-          <span style="cursor:pointer;color:#60a5fa"
-      onclick="openChart('${i.name.replace(/'/g,"\\'")}')">
-  ${i.name}
-</span>
-
+          <span class="item-name" style="cursor:pointer;color:#60a5fa">${i.name}</span>
         </div>
       </td>
       <td>${i.category}</td>
       <td><span class="badge ${i.rarity}">${i.rarity}</span></td>
       <td>${i.value.toLocaleString()}</td>
     `;
+
+    // ✅ Attach listeners HERE
+    tr.querySelector(".bookmark-btn")
+      .addEventListener("click", () => toggleBookmark(i.name));
+
+    tr.querySelector(".item-name")
+      .addEventListener("click", () => openChart(i.name));
+
     table.appendChild(tr);
   });
 }
@@ -351,12 +351,16 @@ let chart;
 let currentItem = "";
 
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/History")
+
   .then(r => r.json())
-  .then(d => history = d.map(h => ({
-    ...h,
-    value: +h.value,
-    date: new Date(h.date + "T00:00:00Z")
-  })));
+  .then(d => {
+    history = d.map(h => ({
+      ...h,
+      value: +h.value,
+      date: new Date(h.date + "T00:00:00Z")
+    }));
+    historyLoaded = true;
+  });
 
 function openChart(name) {
   trackItemView(name);

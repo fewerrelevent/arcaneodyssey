@@ -63,5 +63,17 @@
 </a>
   </section>
 
+
+<script>
+  const hero = document.querySelector('.hero');
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    // Move background at 50% of scroll speed
+    hero.style.backgroundPosition = `center ${scrollY * 0.5}px`;
+  });
+</script>
+
+
 </body>
 </html>

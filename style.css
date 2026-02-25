@@ -479,7 +479,6 @@ td:first-child {
   background-image: url("banner.webp");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -575,14 +574,18 @@ td:first-child {
 }
 
 .service-item {
+  background: #1e293b;
+  border-radius: 14px;
+  padding: 20px;
   font-size: 18px;
-  font-weight: 500;
-  padding: 12px 0;
-  opacity: 0.85;
-  transition: opacity 0.2s ease;
+  font-weight: 600;
+  opacity: 0.9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .service-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
   opacity: 1;
 }
 

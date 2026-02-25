@@ -397,3 +397,26 @@ td:first-child {
     flex-direction: column;
   }
 }
+
+/* ===== BOOKMARKS ===== */
+.bookmark-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b; /* default gray */
+}
+
+.bookmark-btn.active {
+  color: #facc15; /* gold when active */
+}
+
+.bookmark-btn svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: currentColor; /* uses the button's color */
+}

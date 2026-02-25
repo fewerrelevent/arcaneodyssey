@@ -397,3 +397,60 @@ td:first-child {
     flex-direction: column;
   }
 }
+
+/* ===== BOOKMARKS ===== */
+.bookmark-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b; /* default gray */
+}
+
+.bookmark-btn.active {
+  color: #facc15; /* gold when active */
+}
+
+.bookmark-btn svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: currentColor; /* uses the button's color */
+}
+
+/* Base sort button */
+.sort-btn {
+  position: relative;
+  padding-right: 24px; /* space for arrow */
+  transition: color 0.2s ease;
+  color: #94a3b8; /* text color of inactive button */
+}
+
+/* Arrow element */
+.sort-btn::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 6px solid #64748b; /* muted gray for inactive */
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform 0.3s ease, border-color 0.2s ease;
+  pointer-events: none;
+}
+
+/* Active button */
+.sort-btn.active::after {
+  border-bottom-color: #506bc7; /* bright highlight */
+}
+
+/* Descending arrow rotates 180deg */
+.sort-btn.desc::after {
+  transform: translateY(-50%) rotate(180deg);
+}

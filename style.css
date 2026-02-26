@@ -493,10 +493,10 @@ td:first-child {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(15, 23, 42, 0.3),  /* lighter top tint */
-    rgba(15, 23, 42, 0.5)   /* slightly darker bottom tint */
+    rgba(15,23,42,0.15),
+    rgba(15,23,42,0.35)
   );
-  pointer-events: none; /* allows clicks to pass through */
+  pointer-events: none;
 }
 
 .hero h1 {

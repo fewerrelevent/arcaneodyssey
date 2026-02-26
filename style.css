@@ -4,15 +4,14 @@
 /* ===== GLOBAL STYLES ===== */
 html {
   overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
 body {
   font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1b1f2d);
   color: #e5e7eb;
   margin: 0;
-  padding: 24px;
-  padding-top: 100px; /* accounts for fixed navbar */
+  padding-top: 60px; /* accounts for fixed navbar */
   text-align: center;
 }
 /* ===== HEADERS ===== */
@@ -327,18 +326,6 @@ td:first-child {
 
 
 /* ===== DISCORD BUTTON ===== */
-.discord-btn {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 12px 22px;
-  background: #5865F2;
-  color: white;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-
 .discord-btn:hover {
   background: #4752c4;
   transform: translateY(-2px);
@@ -496,6 +483,7 @@ td:first-child {
     rgba(15,23,42,0.15),
     rgba(15,23,42,0.35)
   );
+  z-index: 0;          /* sits behind content */
   pointer-events: none;
 }
 
@@ -542,11 +530,17 @@ td:first-child {
   background: #273449;
 }
 
+.hero-content {
+  position: relative;
+  z-index: 1;          /* above overlay */
+}
+
+/* ===== SERVICES SECTION ===== */
+
 /* ===== SERVICES SECTION ===== */
 
 .services-section {
   padding: 100px 20px;
-  text-align: center;
   background: linear-gradient(180deg, #111827, #0f172a);
   border-top: 1px solid #334155;
   border-bottom: 1px solid #334155;
@@ -554,85 +548,73 @@ td:first-child {
 
 .services-section h2 {
   font-size: 32px;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   letter-spacing: 1px;
 }
 
+/* Grid layout */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  column-gap: 20px;   /* horizontal spacing */
-  row-gap: 32px;      /* vertical spacing increased */
-  max-width: 900px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 36px; /* more breathing room */
+  max-width: 1100px;
   margin: auto;
 }
 
-.s.service-item {
-  background: linear-gradient(145deg, #1e293b, #172033);
+/* Advertisement-style cards */
+.service-item {
+  background: linear-gradient(145deg, #1e293b, #162133);
   border: 1px solid #2a3648;
-  border-radius: 14px;
-  padding: 20px;
-  text-align: left;
-  transition: all 0.25s ease;
+  border-radius: 16px;
+  padding: 26px 22px;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
-/* subtle glow border effect */
+.service-item h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.service-item p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #9ca3af; /* lighter gray */
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Subtle animated glow */
 .service-item::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 14px;
   background: linear-gradient(120deg, #5865F2, #22d3ee);
   opacity: 0;
-  transition: opacity 0.25s ease;
-  z-index: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* content stays above glow */
-.service-item > * {
+/* Keep text above glow */
+.service-item span {
   position: relative;
   z-index: 1;
 }
 
-.service-title {
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: #f1f5f9;
-}
-
-.service-desc {
-  font-size: 14px;
-  color: #94a3b8;
-}
-
 /* Hover effect */
 .service-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: #5865F2;
-  box-shadow: 0 8px 24px rgba(88,101,242,0.25);
+  box-shadow: 0 12px 28px rgba(88,101,242,0.25);
 }
 
 .service-item:hover::before {
-  opacity: 0.08; /* subtle tint glow */
-}ervice-item {
-  background: linear-gradient(135deg, #1e293b, #1b1f2d);
-  border-radius: 14px;
-  padding: 24px 16px;
-  font-size: 18px;
-  font-weight: 600;
-  opacity: 0.95;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  color: #f1f5f9;
+  opacity: 0.08;
 }
 
-.service-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(34,211,238,0.25);
-  opacity: 1;
-}
 
 html, body {
   min-height: 100%;
@@ -656,11 +638,6 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
-
-html {
-  scrollbar-gutter: stable;
-}
-
 
 .discord-btn {
   display: inline-block;

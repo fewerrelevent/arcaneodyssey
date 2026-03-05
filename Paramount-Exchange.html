@@ -224,15 +224,20 @@ function renderItems() {
     (!state.unobtainable || i.unobtainable)
   );
 
-filtered.sort((a,b)=>{
-  let r =
-    state.sort === "value"
-     ? (a.value == null ? Infinity : a.value) - (b.value == null ? Infinity : b.value)
-      : state.sort === "rarity"
-        ? rarityRank[a.rarity] - rarityRank[b.rarity]
-        : a.name.localeCompare(b.name);
+filtered.sort((a, b) => {
+  if (state.sort === "value") {
+    // Handle null/undefined/0 values
+    if (a.value == null && b.value != null) return 1;   // a is N/A → push down
+    if (b.value == null && a.value != null) return -1;  // b is N/A → push down
+    if (a.value == null && b.value == null) return 0;   // both N/A → equal
 
-  return state.asc ? r : -r;
+    return state.asc ? a.value - b.value : b.value - a.value;
+  }
+  if (state.sort === "rarity") {
+    const r = rarityRank[a.rarity] - rarityRank[b.rarity];
+    return state.asc ? r : -r;
+  }
+  return state.asc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
 });
 
   if (!filtered.length) {

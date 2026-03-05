@@ -224,13 +224,16 @@ function renderItems() {
     (!state.unobtainable || i.unobtainable)
   );
 
-  filtered.sort((a,b)=>{
-    let r =
-      state.sort==="value" ? a.value-b.value :
-      state.sort==="rarity" ? rarityRank[a.rarity]-rarityRank[b.rarity] :
-      a.name.localeCompare(b.name);
-    return state.asc ? r : -r;
-  });
+filtered.sort((a,b)=>{
+  let r =
+    state.sort === "value"
+     ? (a.value == null ? Infinity : a.value) - (b.value == null ? Infinity : b.value)
+      : state.sort === "rarity"
+        ? rarityRank[a.rarity] - rarityRank[b.rarity]
+        : a.name.localeCompare(b.name);
+
+  return state.asc ? r : -r;
+});
 
   if (!filtered.length) {
     table.innerHTML = `<tr><td colspan="5" style="padding:20px;opacity:.6;">No items found</td></tr>`;
@@ -254,7 +257,7 @@ function renderItems() {
       </td>
       <td>${i.category}</td>
       <td><span class="badge ${i.rarity}">${i.rarity}</span></td>
-      <td>${i.value.toLocaleString()}</td>
+      <td>${formatValue(i.value)}</td>
     `;
 
     // ✅ Attach listeners HERE
@@ -266,6 +269,16 @@ function renderItems() {
 
     table.appendChild(tr);
   });
+}
+
+let v = null;
+
+// Treat empty, invalid, or 0 as N/A
+if (i.value !== undefined && i.value !== null && i.value.trim() !== "") {
+  const n = Number(i.value);
+  if (!isNaN(n) && n !== 0) {
+    v = n;
+  }
 }
 
 function renderBookmarks() {
@@ -286,7 +299,7 @@ function renderBookmarks() {
     div.onclick = () => toggleBookmark(i.name);
     div.innerHTML = `
       <span class="bookmark-name-pill ${i.rarity}">${i.name}</span>
-      <strong>${i.value.toLocaleString()}</strong>
+      <strong>${formatValue(i.value)}</strong>
     `;
     wrap.appendChild(div);
   });
@@ -338,20 +351,32 @@ document.querySelectorAll(".sort-btn").forEach(btn => {
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/Sheet1")
 .then(r=>r.json())
 .then(d=>{
-items = d.map(i => ({
-  ...i,
-  nameLower: i.name.toLowerCase(),
-  value: +i.value || 0,
-  bossDrop: i.bossDrop === "TRUE",
-  sunken: i.sunken === "TRUE",
-  unobtainable: i.unobtainable === "TRUE"
-}));
+items = d.map(i => {
+
+  let v = null;
+
+  if (i.value !== undefined && i.value !== null && i.value.trim() !== "") {
+    v = Number(i.value);
+    if (isNaN(v)) v = null;
+  }
+
+  return {
+    ...i,
+    nameLower: i.name.toLowerCase(),
+    value: v,
+    bossDrop: i.bossDrop === "TRUE",
+    sunken: i.sunken === "TRUE",
+    unobtainable: i.unobtainable === "TRUE"
+  };
+});
   renderItems();
   renderBookmarks();
 })
 .catch(()=>{ table.innerHTML = `<tr><td colspan="5" style="padding:20px;opacity:.6;">Failed to load items</td></tr>` });
 
-
+function formatValue(v){
+  return v == null ? "N/A" : v.toLocaleString();
+}
 
 /* ===== HISTORY CHART ===== */
 let history = [];

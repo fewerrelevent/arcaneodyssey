@@ -271,16 +271,6 @@ filtered.sort((a,b)=>{
   });
 }
 
-let v = null;
-
-// Treat empty, invalid, or 0 as N/A
-if (i.value !== undefined && i.value !== null && i.value.trim() !== "") {
-  const n = Number(i.value);
-  if (!isNaN(n) && n !== 0) {
-    v = n;
-  }
-}
-
 function renderBookmarks() {
   const wrap = document.getElementById("bookmarkList");
   wrap.innerHTML = "";

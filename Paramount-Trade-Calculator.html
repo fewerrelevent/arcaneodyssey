@@ -15,7 +15,7 @@ body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: linear-gradient(135deg, #0f172a, #1b1f2d);
   color: #e5e7eb;
-  padding: 20px;
+  padding: 80px 20px 20px;  /* ← top padding increased to clear the 60px nav */
   user-select: none;
   margin: 0;
 }
@@ -30,8 +30,8 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 2em;
+  margin: 0 0 8px 0;
+  font-size: clamp(1.2em, 2.5vw, 2em);
   font-weight: 700;
   letter-spacing: 0.5px;
 }
@@ -45,7 +45,7 @@ h1::after {
   border-radius: 3px;
 }
 
-.search-container { margin-bottom: 15px; width: 500px; }
+.search-container { margin-bottom: 6px; width: clamp(300px, 35vw, 560px); }
 input[type="text"] {
   width: 100%;
   padding: 10px;
@@ -62,23 +62,23 @@ input[type="text"]:focus {
 }
 
 .item-list {
-  width: 500px;
+  width: clamp(300px, 35vw, 560px);
   background: linear-gradient(180deg,#020617,#020617cc);
-  margin-bottom: 25px;
-  padding: 12px;
+  margin-bottom: 8px;
+  padding: 6px;
   border-radius: 12px;
-  max-height: 300px;
+  max-height: clamp(120px, 16vh, 220px);
   overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 .item {
-  width: 80px;
-  height: 80px;
+  width: clamp(52px, 5vw, 80px);
+  height: clamp(52px, 5vw, 80px);
   border-radius: 6px;
   overflow: hidden;
   cursor: grab;
@@ -93,18 +93,14 @@ input[type="text"]:focus {
   transform: translateY(-1px);
   box-shadow: 0 0 8px #6366f1;
 }
-
 .item img {
-  border-radius: 0;  
+  border-radius: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   pointer-events: none;
   display: block;
 }
-
-
-
 .item.dragging { opacity: 0.5; }
 
 .trade-container {
@@ -112,40 +108,37 @@ input[type="text"]:focus {
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  gap: 60px;
-  margin-bottom: 15px;
+  gap: clamp(16px, 3vw, 60px);
+  margin-bottom: 6px;
   flex-wrap: nowrap;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: repeat(2, 100px);
-  gap: 10px;
+  grid-template-columns: repeat(4, clamp(70px, 7vw, 110px));
+  grid-template-rows: repeat(2, clamp(70px, 7vw, 110px));
+  gap: clamp(4px, 0.5vw, 10px);
   background: linear-gradient(90deg,#111827,#0f172a);
-  padding: 10px;
+  padding: clamp(6px, 0.6vw, 12px);
   border-radius: 12px;
 }
 
 .grid-cell {
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
-  width: 100px;
-  height: 100px;
+  width: clamp(70px, 7vw, 110px);
+  height: clamp(70px, 7vw, 110px);
   background: #020617cc;
   border: 2px dashed #1e293b;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  padding: 6px;
+  padding: 3px;
   flex-direction: column;
   position: relative;
   transition: background 0.15s, border-color 0.15s;
 }
-
 .grid-cell.highlight { background: #334155; border-color: #6366f1; }
-
 .grid-cell img {
   border-radius: 0;
   width: 100%;
@@ -192,9 +185,9 @@ input[type="text"]:focus {
 #resetTrade:active { transform: translateY(1px); }
 
 .difference {
-  font-size: 1.4em;
+  font-size: clamp(1em, 1.5vw, 1.5em);
   font-weight: bold;
-  margin-top: 16px;
+  margin-top: clamp(30px, 5vw, 60px);
   align-self: flex-start;
 }
 
@@ -264,14 +257,13 @@ input[type="text"]:focus {
 .info-panel strong { color: #6366f1; }
 
 .trade-side {
-  min-width: 420px;
+  min-width: unset;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-.trade-title { height: 32px; }
-.total { height: 28px; }
+.trade-title { height: 24px; font-size: clamp(0.8em, 1.2vw, 1em); }
+.total { height: 20px; font-size: clamp(0.8em, 1.1vw, 0.95em); }
 
 .info-header {
   display: flex;

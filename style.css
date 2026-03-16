@@ -1,5 +1,7 @@
-/* ===== GOOGLE FONT ===== */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+/* ===== GOOGLE FONTS ===== */
+/* Rajdhani: sleek, refined display — used for headings & nav brand */
+/* DM Sans: clean, modern body font — replaces Inter */
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap");
 
 /* ===== GLOBAL STYLES ===== */
 html {
@@ -8,17 +10,22 @@ html {
 }
 
 body {
-  font-family: Inter, Arial, sans-serif;
+  font-family: 'DM Sans', sans-serif;
   color: #e5e7eb;
   margin: 0;
-  padding-top: 60px; /* accounts for fixed navbar */
+  padding-top: 60px;
   text-align: center;
 }
+
 /* ===== HEADERS ===== */
+h1, h2 {
+  font-family: 'Rajdhani', sans-serif;
+}
+
 h1 {
   margin-bottom: 18px;
   font-size: 30px;
-  font-weight: 800;
+  font-weight: 700;
   color: #f1f5f9;
   text-align: center;
   letter-spacing: 0.5px;
@@ -48,7 +55,7 @@ a {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;   /* replaces width: 100% */
+  right: 0;
   background: linear-gradient(90deg, #111827, #1b1f2d);
   display: flex;
   align-items: center;
@@ -62,9 +69,11 @@ a {
 }
 
 .nav-left {
+  font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
   font-size: 18px;
   color: #f1f5f9;
+  letter-spacing: 0.3px;
 }
 
 .nav-links {
@@ -73,6 +82,7 @@ a {
 }
 
 .nav-links a {
+  font-family: 'DM Sans', sans-serif;
   text-decoration: none;
   color: #94a3b8;
   font-weight: 500;
@@ -133,6 +143,7 @@ button {
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
 }
 
 input {
@@ -259,6 +270,8 @@ thead th {
   z-index: 10;
   background: #334155;
   padding: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
 }
 
 tbody tr {
@@ -297,7 +310,7 @@ td:first-child {
   gap: 8px;
 }
 
-/* ===== BOTTOM ROW (GALLEONS + RESET) ===== */
+/* ===== BOTTOM ROW ===== */
 .bottom-row {
   display: flex;
   justify-content: center;
@@ -324,18 +337,13 @@ td:first-child {
   box-shadow: 0 0 0 1px #6366f1;
 }
 
-
-/* ===== DISCORD BUTTON ===== */
-.discord-btn:hover {
-  background: #4752c4;
-  transform: translateY(-2px);
-}
 /* ===== BADGES ===== */
 .badge {
   padding: 3px 8px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .Common { background:#475569; }
@@ -402,7 +410,7 @@ td:first-child {
   }
 }
 
-/* ===== BOOKMARKS ===== */
+/* ===== BOOKMARK BUTTON ===== */
 .bookmark-btn {
   background: none;
   border: none;
@@ -411,29 +419,28 @@ td:first-child {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b; /* default gray */
+  color: #64748b;
 }
 
 .bookmark-btn.active {
-  color: #399bbe; /* blue when active */
+  color: #399bbe;
 }
 
 .bookmark-btn svg {
   display: block;
   width: 18px;
   height: 18px;
-  fill: currentColor; /* uses the button's color */
+  fill: currentColor;
 }
 
-/* Base sort button */
+/* ===== SORT BUTTONS ===== */
 .sort-btn {
   position: relative;
-  padding-right: 24px; /* space for arrow */
+  padding-right: 24px;
   transition: color 0.2s ease;
-  color: #94a3b8; /* text color of inactive button */
+  color: #94a3b8;
 }
 
-/* Arrow element */
 .sort-btn::after {
   content: '';
   position: absolute;
@@ -443,23 +450,21 @@ td:first-child {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 6px solid #64748b; /* muted gray for inactive */
+  border-bottom: 6px solid #64748b;
   transform: translateY(-50%) rotate(0deg);
   transition: transform 0.3s ease, border-color 0.2s ease;
   pointer-events: none;
 }
 
-/* Active button */
 .sort-btn.active::after {
-  border-bottom-color: #506bc7; /* bright highlight */
+  border-bottom-color: #506bc7;
 }
 
-/* Descending arrow rotates 180deg */
 .sort-btn.desc::after {
   transform: translateY(-50%) rotate(180deg);
 }
-/* ===== HERO SECTION ===== */
 
+/* ===== HERO SECTION ===== */
 .hero {
   position: relative;
   height: 100vh;
@@ -483,14 +488,15 @@ td:first-child {
     rgba(15,23,42,0.15),
     rgba(15,23,42,0.35)
   );
-  z-index: 0;          /* sits behind content */
+  z-index: 0;
   pointer-events: none;
 }
 
 .hero h1 {
-  font-size: 48px; 
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 48px;
   margin-bottom: 16px;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5); /* softer shadow */
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
 }
 
 .hero-sub {
@@ -498,7 +504,9 @@ td:first-child {
   max-width: 600px;
   line-height: 1.5;
   text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  font-family: 'DM Sans', sans-serif;
 }
+
 .hero-buttons {
   display: flex;
   justify-content: center;
@@ -512,6 +520,7 @@ td:first-child {
   padding: 12px 28px;
   border-radius: 10px;
   text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 600;
   transition: all 0.25s ease;
 }
@@ -532,13 +541,10 @@ td:first-child {
 
 .hero-content {
   position: relative;
-  z-index: 1;          /* above overlay */
+  z-index: 1;
 }
 
 /* ===== SERVICES SECTION ===== */
-
-/* ===== SERVICES SECTION ===== */
-
 .services-section {
   padding: 100px 20px;
   background: linear-gradient(180deg, #111827, #0f172a);
@@ -547,35 +553,57 @@ td:first-child {
 }
 
 .services-section h2 {
+  font-family: 'Rajdhani', sans-serif;
   font-size: 32px;
   margin-bottom: 60px;
   letter-spacing: 1px;
 }
 
-/* Grid layout */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 36px; /* more breathing room */
+  gap: 36px;
   max-width: 1100px;
   margin: auto;
 }
 
-/* Advertisement-style cards */
+/* ===== SERVICE CARD — BASE (hidden before scroll) ===== */
 .service-item {
   background: linear-gradient(145deg, #1e293b, #162133);
   border: 1px solid #2a3648;
   border-radius: 16px;
   padding: 26px 22px;
-  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   text-align: center;
+
+  /* scroll-animation initial state */
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Triggered by JS once in viewport */
+.service-item.card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover still works on top of visible state */
+.service-item.card-visible:hover {
+  transform: translateY(-6px);
+  border-color: #5865F2;
+  box-shadow: 0 12px 28px rgba(88,101,242,0.25);
 }
 
 .service-title {
-  font-size: 22px;
-  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
   color: #ffffff;
   margin-bottom: 8px;
   position: relative;
@@ -583,6 +611,7 @@ td:first-child {
 }
 
 .service-desc {
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: #9ca3af;
@@ -591,7 +620,6 @@ td:first-child {
   z-index: 1;
 }
 
-/* Subtle animated glow */
 .service-item::before {
   content: "";
   position: absolute;
@@ -601,74 +629,192 @@ td:first-child {
   transition: opacity 0.3s ease;
 }
 
-/* Keep text above glow */
 .service-item span {
   position: relative;
   z-index: 1;
 }
 
-/* Hover effect */
-.service-item:hover {
-  transform: translateY(-6px);
-  border-color: #5865F2;
-  box-shadow: 0 12px 28px rgba(88,101,242,0.25);
-}
-
-.service-item:hover::before {
+.service-item.card-visible:hover::before {
   opacity: 0.08;
 }
 
+/* ===== DISCORD CTA SECTION ===== */
+.discord-section {
+  position: relative;
+  padding: 100px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #080f1e;
+}
 
+/* Content card */
+.discord-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  background: linear-gradient(160deg, #0f172a, #131c2e);
+  border: 1px solid rgba(88,101,242,0.35);
+  border-radius: 24px;
+  padding: 52px 44px;
+  box-shadow: 0 0 60px rgba(88,101,242,0.12), 0 20px 40px rgba(0,0,0,0.5);
+  text-align: center;
+  /* Animated shimmer border via pseudo-element */
+}
+
+
+/* Discord logo circle */
+.discord-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #5865F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  box-shadow: 0 0 28px rgba(88,101,242,0.5);
+  animation: discord-icon-float 3s ease-in-out infinite;
+}
+
+@keyframes discord-icon-float {
+  0%, 100% { transform: translateY(0);   box-shadow: 0 0 28px rgba(88,101,242,0.5); }
+  50%       { transform: translateY(-6px); box-shadow: 0 10px 32px rgba(88,101,242,0.7); }
+}
+
+.discord-logo-svg {
+  width: 36px;
+  height: 36px;
+  fill: white;
+}
+
+.discord-heading {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 14px;
+  letter-spacing: 0.3px;
+}
+
+/* Override the global h1::after — discord h2 doesn't need the underline bar */
+.discord-heading::after {
+  display: none;
+}
+
+.discord-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #94a3b8;
+  line-height: 1.7;
+  margin: 0 0 32px;
+}
+
+/* CTA button */
+.discord-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #5865F2;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 30px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(88,101,242,0.45);
+  margin-top: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep on hover */
+.discord-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+
+.discord-cta-btn:hover::after {
+  left: 140%;
+}
+
+.discord-cta-btn:hover {
+  background: #4752c4;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 28px rgba(88,101,242,0.65);
+}
+
+.btn-arrow {
+  width: 17px;
+  height: 17px;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.discord-cta-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Live dot */
+.discord-member-count {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #64748b;
+  margin: 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34,197,94,0.5);
+  animation: pulse-green 2s ease-out infinite;
+}
+
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+/* ===== GLOBAL BG ===== */
 html, body {
   min-height: 100%;
   background: linear-gradient(135deg, #0f172a, #1b1f2d);
 }
 
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0f172a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
-}
-
-.discord-btn {
-  display: inline-block;
-  padding: 14px 28px;
-  background: #5865F2;
-  color: white;
-  font-weight: 700;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(88,101,242,0.4);
-}
-
-.discord-btn:hover {
-  background: #4752c4;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(88,101,242,0.6);
-}
-
+/* ===== HERO LOGO ===== */
 .hero-logo {
-  width: 100px; /* smaller than before */
-  max-width: 25%; /* ensures it doesn't grow too big on large screens */
-  height: auto;   /* maintains aspect ratio */
+  width: 100px;
+  max-width: 25%;
+  height: auto;
   margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
-  .hero-logo {
-    width: 80px;
-  }
+  .hero-logo { width: 80px; }
+  .discord-inner { padding: 40px 28px; }
+  .discord-ring { display: none; }
+  .hero h1 { font-size: 34px; }
 }

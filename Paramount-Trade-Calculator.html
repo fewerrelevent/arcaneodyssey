@@ -9,13 +9,13 @@
 
 <title>Paramount Trade Calculator</title>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap");
 
 body {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   background: linear-gradient(135deg, #0f172a, #1b1f2d);
   color: #e5e7eb;
-  padding: 80px 20px 20px;  /* ← top padding increased to clear the 60px nav */
+  padding: 80px 20px 20px;
   user-select: none;
   margin: 0;
 }
@@ -29,6 +29,7 @@ body {
 }
 
 h1 {
+  font-family: 'Rajdhani', sans-serif;
   text-align: center;
   margin: 0 0 8px 0;
   font-size: clamp(1.2em, 2.5vw, 2em);
@@ -116,11 +117,11 @@ input[type="text"]:focus {
 .grid {
   display: grid;
   grid-template-columns: repeat(4, clamp(70px, 7vw, 110px));
-  grid-template-rows: repeat(2, clamp(70px, 7vw, 110px));
   gap: clamp(4px, 0.5vw, 10px);
   background: linear-gradient(90deg,#111827,#0f172a);
   padding: clamp(6px, 0.6vw, 12px);
   border-radius: 12px;
+  /* rows grow automatically as cells are added */
 }
 
 .grid-cell {
@@ -148,7 +149,6 @@ input[type="text"]:focus {
   display: block;
   margin: auto;
 }
-
 
 .stack-count {
   position: absolute;
@@ -304,402 +304,408 @@ input[type="text"]:focus {
   }
 }
 
-
-/* ===== MOBILE TOUCH SUPPORT ===== */
 @media (pointer: coarse) {
-  .item {
-    width: 90px;
-    height: 90px;
-  }
-
-  .grid-cell {
-    width: 110px;
-    height: 110px;
-  }
-
-  .remove-btn {
-    font-size: 22px;
-    padding: 6px;
-  }
-
-  button {
-    min-height: 44px;
-  }
+  .item { width: 90px; height: 90px; }
+  .grid-cell { width: 110px; height: 110px; }
+  .remove-btn { font-size: 22px; padding: 6px; }
+  button { min-height: 44px; }
 }
-
-
-
 </style>
 </head>
 <body>
+
   <!-- ===== TOP NAVIGATION ===== -->
-<div class="top-nav">
-  <div class="nav-left">Paramount Exchange</div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="Paramount-Exchange.html">Value List</a>
-    <a href="Paramount-Trade-Calculator.html" class="active">Trade Calculator</a>
-    <a href="#">Submit Values</a>
-    <a href="#">Other Links</a>
-  </div>
-</div>
-
-<h1>Paramount Trade Calculator</h1>
-
-<div class="main-content">
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search items...">
-  </div>
-
-  <div class="item-list" id="itemList"></div>
-
-  <div class="trade-container">
-    <div class="trade-side">
-      <div class="trade-title">Items You Will Give</div>
-      <div class="total" id="total1">Total: 0</div>
-      <div class="grid" id="player1Grid">
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-      </div>
-    </div>
-
-    <div class="difference" id="difference">+0</div>
-
-    <div class="trade-side">
-      <div class="trade-title">Items You Will Receive</div>
-      <div class="total" id="total2">Total: 0</div>
-      <div class="grid" id="player2Grid">
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-      </div>
+  <div class="top-nav">
+    <div class="nav-left">Paramount Exchange</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="Paramount-Exchange.html">Value List</a>
+      <a href="Paramount-Trade-Calculator.html" class="active">Trade Calculator</a>
+      <a href="#">Submit Values</a>
+      <a href="#">Other Links</a>
     </div>
   </div>
 
-  <div class="bottom-row">
-  <div class="galleon-box">
-<input type="number" id="galleons1" placeholder="Galleons" min="0" max="250000000">
+  <h1>Paramount Trade Calculator</h1>
+
+  <div class="main-content">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search items...">
+    </div>
+
+    <div class="item-list" id="itemList"></div>
+
+    <div class="trade-container">
+      <div class="trade-side">
+        <div class="trade-title">Items You Will Give</div>
+        <div class="total" id="total1">Total: 0</div>
+        <div class="grid" id="player1Grid"></div>
+      </div>
+
+      <div class="difference" id="difference">+0</div>
+
+      <div class="trade-side">
+        <div class="trade-title">Items You Will Receive</div>
+        <div class="total" id="total2">Total: 0</div>
+        <div class="grid" id="player2Grid"></div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="galleon-box">
+        <input type="number" id="galleons1" placeholder="Galleons" min="0" max="250000000">
+      </div>
+      <button id="resetTrade">Reset Trade</button>
+      <div class="galleon-box">
+        <input type="number" id="galleons2" placeholder="Galleons" min="0" max="250000000">
+      </div>
+    </div>
   </div>
 
-  <button id="resetTrade">Reset Trade</button>
+  <div class="tooltip" id="tooltip"></div>
 
-  <div class="galleon-box">
-<input type="number" id="galleons2" placeholder="Galleons" min="0" max="250000000">
+  <div id="contextMenu">
+    <div>Quantity: <input type="number" id="ctxQuantity" value="1" min="1" max="500"></div>
+    <div>
+      <button id="addLeftBtn">Add to Give</button>
+      <button id="addRightBtn">Add to Receive</button>
+    </div>
   </div>
-</div>
-</div>
 
-<div class="tooltip" id="tooltip"></div>
-
-<div id="contextMenu">
-  <div>Quantity: <input type="number" id="ctxQuantity" value="1" min="1" max="500"></div>
-  <div>
-    <button id="addLeftBtn">Add to Give</button>
-    <button id="addRightBtn">Add to Receive</button>
+  <div class="info-panel" id="infoPanel">
+    <div class="info-header">
+      <strong>Tip:</strong>
+      <span class="close-info" id="closeInfo">×</span>
+    </div>
+    <br>
+    Right-click (or long-press) on any item to add in <strong>bulk</strong>!<br>
+    Choose the side ("Give" or "Receive") and quantity (up to 500 at a time).<br><br>
+    Shift + click the red × removes <strong>all items</strong> instantly.
   </div>
-</div>
-
-
-<div class="info-panel" id="infoPanel">
-  <div class="info-header">
-    <strong>Tip:</strong>
-    <span class="close-info" id="closeInfo">×</span>
-  </div>
-  <br>
-  Right-click (or long-press) on any item to add in <strong>bulk</strong>!<br>
-  Choose the side ("Give" or "Receive") and quantity (up to 500 at a time).<br><br>
-  Shift + click the red × removes <strong>all items</strong> instantly.
-</div>
-
-
 
 <script>
 const sheetURL = "https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/Sheet1";
-let items=[], draggedItem=null, draggedFromGrid=false, rightClickedItem=null;
-const itemList=document.getElementById("itemList");
-const grids=[document.getElementById("player1Grid"), document.getElementById("player2Grid")];
-const total1=document.getElementById("total1"), total2=document.getElementById("total2");
-const difference=document.getElementById("difference");
-const resetTrade=document.getElementById("resetTrade");
-const tooltip=document.getElementById("tooltip");
-const searchInput=document.getElementById("searchInput");
-const contextMenu=document.getElementById("contextMenu");
-const ctxQuantity=document.getElementById("ctxQuantity");
-const addLeftBtn=document.getElementById("addLeftBtn");
-const addRightBtn=document.getElementById("addRightBtn");
-let touchDraggedItem = null;
-let touchDragFromGrid = false;
+let items = [], draggedItem = null, draggedFromGrid = false, rightClickedItem = null;
+let touchDraggedItem = null, touchDragFromGrid = false;
 
+const itemList    = document.getElementById("itemList");
+const grids       = [document.getElementById("player1Grid"), document.getElementById("player2Grid")];
+const total1      = document.getElementById("total1");
+const total2      = document.getElementById("total2");
+const difference  = document.getElementById("difference");
+const tooltip     = document.getElementById("tooltip");
+const searchInput = document.getElementById("searchInput");
+const contextMenu = document.getElementById("contextMenu");
+const ctxQuantity = document.getElementById("ctxQuantity");
+const galleon1    = document.getElementById("galleons1");
+const galleon2    = document.getElementById("galleons2");
 
-ctxQuantity.addEventListener("click", e => {
-  e.stopPropagation();
+/* ===== INIT GRIDS — start each with 8 empty cells ===== */
+grids.forEach(grid => {
+  for (let i = 0; i < 8; i++) {
+    grid.appendChild(makeCell(grid));
+  }
 });
 
-ctxQuantity.addEventListener("mousedown", e => {
-  e.stopPropagation();
-});
-
-ctxQuantity.addEventListener("input", () => {
-  let value = Number(ctxQuantity.value);
-
-  if (value > 500) ctxQuantity.value = 500;
-  if (value < 1 || isNaN(value)) ctxQuantity.value = 1;
-});
-
-
-// Fetch items
-fetch(sheetURL).then(res=>res.json()).then(data=>{
-  items=data.map(item=>({...item,value:Number(item.value),sunken:item.sunken==="TRUE",bossDrop:item.bossDrop==="TRUE"}));
-  populateItems();
-}).catch(err=>console.error(err));
-
-function populateItems(search=""){
-  itemList.innerHTML="";
-  items.filter(i=>i.name.toLowerCase().includes(search.toLowerCase())).forEach(item=>{
-    const div=document.createElement("div"); div.className="item"; div.draggable=true;
-    div.dataset.name=item.name; div.dataset.value=item.value; div.dataset.image=item.image;
-    div.dataset.category=item.category; div.dataset.rarity=item.rarity;
-    const img=document.createElement("img"); img.src=item.image; img.alt=item.name; div.appendChild(img);
-
-    div.addEventListener("mouseenter",()=>{ tooltip.innerHTML=`<strong>${item.name}</strong>
-<br>Value: ${item.value.toLocaleString()}<br>Category: ${item.category}<br>Rarity: ${item.rarity}`; tooltip.style.display="block"; });
-    div.addEventListener("mousemove", e=>{ tooltip.style.left=e.clientX+15+"px"; tooltip.style.top=e.clientY+6+"px"; });
-    div.addEventListener("mouseleave",()=>tooltip.style.display="none");
-    div.addEventListener("dragstart", ()=>{ draggedItem=div; draggedFromGrid=false; setTimeout(()=>div.classList.add("dragging"),0); });
-    div.addEventListener("dragend", ()=>{ div.classList.remove("dragging"); draggedItem=null; });
-
-    // Right-click / long-press for mobile
-    let pressTimer;
-    const showMenu=e=>{
-      e.preventDefault();
-      rightClickedItem=div;
-      contextMenu.style.display="block";
-      contextMenu.style.left=(e.pageX||e.touches[0].pageX)+"px";
-      contextMenu.style.top=(e.pageY||e.touches[0].pageY)+"px";
-      ctxQuantity.value=1;
-    };
-    div.addEventListener("contextmenu", showMenu);
-    div.addEventListener("touchstart", e=>{ pressTimer=setTimeout(()=>showMenu(e),500); });
-    div.addEventListener("touchend", ()=>clearTimeout(pressTimer));
-
-div.addEventListener("touchstart", e => {
-  const t = e.touches[0];
-
-  const timer = setTimeout(() => {
-    tooltip.innerHTML = `
-      <strong>${item.name}</strong><br>
-      Value: ${item.value.toLocaleString()}<br>
-      Category: ${item.category}<br>
-      Rarity: ${item.rarity}
-    `;
-    tooltip.style.left = t.clientX + 10 + "px";
-    tooltip.style.top = t.clientY + 10 + "px";
-    tooltip.style.display = "block";
-
-    setTimeout(() => tooltip.style.display = "none", 2000);
-  }, 350);
-
-  div.addEventListener("touchend", () => clearTimeout(timer), { once: true });
-});
-
-
-    itemList.appendChild(div);
-  });
+/* ===== CREATE A SINGLE CELL WITH ALL LISTENERS ===== */
+function makeCell(grid) {
+  const cell = document.createElement("div");
+  cell.className = "grid-cell";
+  attachCellListeners(cell, grid);
+  return cell;
 }
 
+/* ===== ATTACH DRAG/DROP LISTENERS TO A CELL ===== */
+function attachCellListeners(cell, grid) {
+  cell.addEventListener("dragover", e => { e.preventDefault(); cell.classList.add("highlight"); });
+  cell.addEventListener("dragleave", () => cell.classList.remove("highlight"));
+  cell.addEventListener("drop", () => {
+    cell.classList.remove("highlight");
+    if (!draggedItem) return;
 
-contextMenu.addEventListener("click", e => {
-  e.stopPropagation();
-});
-
-contextMenu.addEventListener("mousedown", e => {
-  e.stopPropagation();
-});
-
-
-
-// Function addToGrid, drag/drop, totals, reset, context menu buttons...
-
-// Add item to grid
-function addToGrid(grid, item, count=1){
-  count = Math.min(count, 500);
-  let cell = Array.from(grid.querySelectorAll(".grid-cell")).find(c=>{
-    const img = c.querySelector("img");
-    return img && img.dataset.name===item.dataset.name;
-  });
-
-  if(cell){
-    const img = cell.querySelector("img");
-    img.dataset.count = Number(img.dataset.count||1)+count;
-    cell.querySelector(".stack-count").textContent = img.dataset.count;
-  } else {
-let emptyCell = Array.from(grid.querySelectorAll(".grid-cell"))
-  .find(c => !c.querySelector("img"));
-
-    if(!emptyCell) return;
-    const img = document.createElement("img");
-    img.src = item.dataset.image;
-    img.alt = item.dataset.name;
-    img.dataset.name = item.dataset.name;
-    img.dataset.unitValue = item.dataset.value;
-    img.dataset.count = count;
-   img.dataset.category = item.dataset.category;
-   img.dataset.rarity = item.dataset.rarity;
-
-    const sc = document.createElement("div");
-    sc.className = "stack-count";
-    sc.textContent = count;
-
-    const removeBtn = document.createElement("div");
-    removeBtn.className = "remove-btn";
-    removeBtn.textContent = "×";
-    removeBtn.addEventListener("click", (e)=>{
-      if(e.shiftKey){
-        emptyCell.innerHTML="";
-      } else if(img.dataset.count>1){
-        img.dataset.count--;
-        sc.textContent = img.dataset.count;
-      } else emptyCell.innerHTML="";
-      updateTotals();
-    });
-
-    emptyCell.appendChild(img);
-    emptyCell.appendChild(sc);
-    emptyCell.appendChild(removeBtn);
-
-    img.draggable=true;
-    img.addEventListener("dragstart", ()=>{ draggedItem=img; draggedFromGrid=true; setTimeout(()=>img.classList.add("dragging"),0); });
-    img.addEventListener("dragend", ()=>{ draggedItem.classList.remove("dragging"); draggedItem=null; });
-
-    img.addEventListener("mouseenter", e=>{
-      tooltip.innerHTML = `<strong>${item.name}</strong>
-<br>Value: ${(Number(img.dataset.unitValue) * Number(img.dataset.count)).toLocaleString()}
-<br>Category: ${img.dataset.category}
-<br>Rarity: ${img.dataset.rarity}
-<br>Count: ${img.dataset.count}`;
-      tooltip.style.display="block";
-    });
-    img.addEventListener("mousemove", e=>{
-      tooltip.style.left = e.clientX+15+"px";
-      tooltip.style.top = e.clientY+6+"px";
-    });
-    img.addEventListener("mouseleave", ()=>tooltip.style.display="none");
-  }
-  updateTotals();
-}
-document.addEventListener("touchstart", e => {
-  const itemEl = e.target.closest(".item img, .item, .grid-cell img");
-  if (!itemEl) return;
-
-  // Inventory item
-  if (itemEl.classList.contains("item")) {
-    touchDraggedItem = itemEl;
-    touchDragFromGrid = false;
-  }
-
-  // Grid item
-  if (itemEl.tagName === "IMG" && itemEl.closest(".grid-cell")) {
-    touchDraggedItem = itemEl;
-    touchDragFromGrid = true;
-  }
-}, { passive: true });
-
-
-// Drag & drop
-grids.forEach(grid=>{
-  grid.querySelectorAll(".grid-cell").forEach(cell=>{
-    cell.addEventListener("dragover", e=>{ e.preventDefault(); cell.classList.add("highlight"); });
-    cell.addEventListener("dragleave", ()=>cell.classList.remove("highlight"));
-    cell.addEventListener("drop", ()=>{
-      cell.classList.remove("highlight");
-      if(!draggedItem) return;
-      if(!draggedFromGrid){
-        addToGrid(grid, draggedItem);
-      } else {
-        const oldCell = draggedItem.parentElement;
-        const count = Number(draggedItem.dataset.count);
-        const existing = cell.querySelector(`img[data-name="${draggedItem.dataset.name}"]`);
-        if(existing){
-          existing.dataset.count = Number(existing.dataset.count)+count;
-          existing.nextSibling.textContent = existing.dataset.count;
-          oldCell.innerHTML="";
-} else if(!cell.querySelector("img")){
-  cell.innerHTML = oldCell.innerHTML;
-  oldCell.innerHTML = "";
-}
-document.addEventListener("touchmove", e => {
-  if (!touchDraggedItem) return;
-
-  e.preventDefault();
-
-  const touch = e.touches[0];
-  const el = document.elementFromPoint(touch.clientX, touch.clientY);
-  const cell = el?.closest(".grid-cell");
-
-  document.querySelectorAll(".grid-cell")
-    .forEach(c => c.classList.remove("highlight"));
-
-  if (cell) cell.classList.add("highlight");
-}, { passive: false });
-
-document.addEventListener("touchend", e => {
-  if (!touchDraggedItem) return;
-
-  const touch = e.changedTouches[0];
-  const el = document.elementFromPoint(touch.clientX, touch.clientY);
-  const cell = el?.closest(".grid-cell");
-
-  document.querySelectorAll(".grid-cell")
-    .forEach(c => c.classList.remove("highlight"));
-
-  if (cell) {
-    const grid = cell.closest(".grid");
-
-    if (!touchDragFromGrid) {
-      // Inventory → grid
-      addToGrid(grid, touchDraggedItem);
+    if (!draggedFromGrid) {
+      // From inventory → grid cell
+      addToGrid(grid, draggedItem);
     } else {
-      // Grid → grid (move stack)
-      const oldCell = touchDraggedItem.parentElement;
-      const count = Number(touchDraggedItem.dataset.count || 1);
-      const existing = cell.querySelector(
-        `img[data-name="${touchDraggedItem.dataset.name}"]`
-      );
+      // From grid cell → grid cell
+      const oldCell = draggedItem.parentElement;
+      const count = Number(draggedItem.dataset.count);
+      const existing = cell.querySelector(`img[data-name="${draggedItem.dataset.name}"]`);
 
       if (existing) {
-        existing.dataset.count =
-          Number(existing.dataset.count) + count;
+        existing.dataset.count = Number(existing.dataset.count) + count;
         existing.nextSibling.textContent = existing.dataset.count;
         oldCell.innerHTML = "";
       } else if (!cell.querySelector("img")) {
         cell.innerHTML = oldCell.innerHTML;
         oldCell.innerHTML = "";
+        // Re-attach listeners to the moved img
+        reattachImgListeners(cell, grid);
       }
+      updateTotals();
+    }
+  });
+}
 
+/* ===== RE-ATTACH IMG LISTENERS AFTER CELL MOVE ===== */
+function reattachImgListeners(cell, grid) {
+  const img = cell.querySelector("img");
+  const sc  = cell.querySelector(".stack-count");
+  const rb  = cell.querySelector(".remove-btn");
+  if (!img) return;
+
+  img.draggable = true;
+  img.addEventListener("dragstart", () => {
+    draggedItem = img; draggedFromGrid = true;
+    setTimeout(() => img.classList.add("dragging"), 0);
+  });
+  img.addEventListener("dragend", () => { img.classList.remove("dragging"); draggedItem = null; });
+  img.addEventListener("mouseenter", () => {
+    tooltip.innerHTML = `<strong>${img.dataset.name}</strong><br>
+      Value: ${(Number(img.dataset.unitValue) * Number(img.dataset.count)).toLocaleString()}<br>
+      Category: ${img.dataset.category}<br>Rarity: ${img.dataset.rarity}<br>Count: ${img.dataset.count}`;
+    tooltip.style.display = "block";
+  });
+  img.addEventListener("mousemove", e => {
+    tooltip.style.left = e.clientX + 15 + "px";
+    tooltip.style.top  = e.clientY + 6  + "px";
+  });
+  img.addEventListener("mouseleave", () => tooltip.style.display = "none");
+
+  if (rb) {
+    rb.addEventListener("click", e => {
+      if (e.shiftKey) {
+        cell.innerHTML = "";
+      } else if (Number(img.dataset.count) > 1) {
+        img.dataset.count--;
+        sc.textContent = img.dataset.count;
+      } else {
+        cell.innerHTML = "";
+      }
+      updateTotals();
+    });
+  }
+}
+
+/* ===== EXPAND GRID IF ALL CELLS ARE FULL ===== */
+function expandIfFull(grid) {
+  const cells = Array.from(grid.querySelectorAll(".grid-cell"));
+  const allFull = cells.every(c => c.querySelector("img"));
+  if (!allFull) return;
+
+  // Add 4 more cells (one new row)
+  for (let i = 0; i < 4; i++) {
+    grid.appendChild(makeCell(grid));
+  }
+}
+
+/* ===== ADD ITEM TO GRID ===== */
+function addToGrid(grid, item, count = 1) {
+  count = Math.min(count, 500);
+
+  // Stack onto existing cell with same item
+  const existingCell = Array.from(grid.querySelectorAll(".grid-cell")).find(c => {
+    const img = c.querySelector("img");
+    return img && img.dataset.name === item.dataset.name;
+  });
+
+  if (existingCell) {
+    const img = existingCell.querySelector("img");
+    img.dataset.count = Number(img.dataset.count || 1) + count;
+    existingCell.querySelector(".stack-count").textContent = img.dataset.count;
+    updateTotals();
+    return;
+  }
+
+  // Place in first empty cell
+  const emptyCell = Array.from(grid.querySelectorAll(".grid-cell")).find(c => !c.querySelector("img"));
+  if (!emptyCell) return;
+
+  const img = document.createElement("img");
+  img.src              = item.dataset.image;
+  img.alt              = item.dataset.name;
+  img.dataset.name     = item.dataset.name;
+  img.dataset.unitValue = item.dataset.value;
+  img.dataset.count    = count;
+  img.dataset.category = item.dataset.category;
+  img.dataset.rarity   = item.dataset.rarity;
+
+  const sc = document.createElement("div");
+  sc.className   = "stack-count";
+  sc.textContent = count;
+
+  const removeBtn = document.createElement("div");
+  removeBtn.className   = "remove-btn";
+  removeBtn.textContent = "×";
+  removeBtn.addEventListener("click", e => {
+    if (e.shiftKey) {
+      emptyCell.innerHTML = "";
+    } else if (Number(img.dataset.count) > 1) {
+      img.dataset.count--;
+      sc.textContent = img.dataset.count;
+    } else {
+      emptyCell.innerHTML = "";
+    }
+    updateTotals();
+  });
+
+  emptyCell.appendChild(img);
+  emptyCell.appendChild(sc);
+  emptyCell.appendChild(removeBtn);
+
+  img.draggable = true;
+  img.addEventListener("dragstart", () => {
+    draggedItem = img; draggedFromGrid = true;
+    setTimeout(() => img.classList.add("dragging"), 0);
+  });
+  img.addEventListener("dragend", () => { img.classList.remove("dragging"); draggedItem = null; });
+  img.addEventListener("mouseenter", () => {
+    tooltip.innerHTML = `<strong>${item.dataset.name}</strong><br>
+      Value: ${(Number(img.dataset.unitValue) * Number(img.dataset.count)).toLocaleString()}<br>
+      Category: ${img.dataset.category}<br>Rarity: ${img.dataset.rarity}<br>Count: ${img.dataset.count}`;
+    tooltip.style.display = "block";
+  });
+  img.addEventListener("mousemove", e => {
+    tooltip.style.left = e.clientX + 15 + "px";
+    tooltip.style.top  = e.clientY + 6  + "px";
+  });
+  img.addEventListener("mouseleave", () => tooltip.style.display = "none");
+
+  updateTotals();
+
+  // Check if grid is now full and expand if so
+  setTimeout(() => expandIfFull(grid), 0);
+}
+
+/* ===== FETCH ITEMS ===== */
+fetch(sheetURL).then(res => res.json()).then(data => {
+  items = data.map(item => ({
+    ...item,
+    value: Number(item.value),
+    sunken: item.sunken === "TRUE",
+    bossDrop: item.bossDrop === "TRUE"
+  }));
+  populateItems();
+}).catch(err => console.error(err));
+
+/* ===== POPULATE INVENTORY LIST ===== */
+function populateItems(search = "") {
+  itemList.innerHTML = "";
+  items.filter(i => i.name.toLowerCase().includes(search.toLowerCase())).forEach(item => {
+    const div = document.createElement("div");
+    div.className       = "item";
+    div.draggable       = true;
+    div.dataset.name    = item.name;
+    div.dataset.value   = item.value;
+    div.dataset.image   = item.image;
+    div.dataset.category = item.category;
+    div.dataset.rarity  = item.rarity;
+
+    const img = document.createElement("img");
+    img.src = item.image; img.alt = item.name;
+    div.appendChild(img);
+
+    div.addEventListener("mouseenter", () => {
+      tooltip.innerHTML = `<strong>${item.name}</strong><br>Value: ${item.value.toLocaleString()}<br>Category: ${item.category}<br>Rarity: ${item.rarity}`;
+      tooltip.style.display = "block";
+    });
+    div.addEventListener("mousemove", e => {
+      tooltip.style.left = e.clientX + 15 + "px";
+      tooltip.style.top  = e.clientY + 6  + "px";
+    });
+    div.addEventListener("mouseleave", () => tooltip.style.display = "none");
+    div.addEventListener("dragstart", () => {
+      draggedItem = div; draggedFromGrid = false;
+      setTimeout(() => div.classList.add("dragging"), 0);
+    });
+    div.addEventListener("dragend", () => { div.classList.remove("dragging"); draggedItem = null; });
+
+    // Right-click / long-press
+    let pressTimer;
+    const showMenu = e => {
+      e.preventDefault();
+      rightClickedItem = div;
+      contextMenu.style.display = "block";
+      contextMenu.style.left = (e.pageX || e.touches[0].pageX) + "px";
+      contextMenu.style.top  = (e.pageY || e.touches[0].pageY) + "px";
+      ctxQuantity.value = 1;
+    };
+    div.addEventListener("contextmenu", showMenu);
+    div.addEventListener("touchstart", e => { pressTimer = setTimeout(() => showMenu(e), 500); });
+    div.addEventListener("touchend", () => clearTimeout(pressTimer));
+
+    // Touch tooltip
+    div.addEventListener("touchstart", e => {
+      const t = e.touches[0];
+      const timer = setTimeout(() => {
+        tooltip.innerHTML = `<strong>${item.name}</strong><br>Value: ${item.value.toLocaleString()}<br>Category: ${item.category}<br>Rarity: ${item.rarity}`;
+        tooltip.style.left = t.clientX + 10 + "px";
+        tooltip.style.top  = t.clientY + 10 + "px";
+        tooltip.style.display = "block";
+        setTimeout(() => tooltip.style.display = "none", 2000);
+      }, 350);
+      div.addEventListener("touchend", () => clearTimeout(timer), { once: true });
+    });
+
+    itemList.appendChild(div);
+  });
+}
+
+/* ===== TOUCH DRAG ===== */
+document.addEventListener("touchstart", e => {
+  const itemEl = e.target.closest(".item img, .item, .grid-cell img");
+  if (!itemEl) return;
+  if (itemEl.classList.contains("item")) { touchDraggedItem = itemEl; touchDragFromGrid = false; }
+  if (itemEl.tagName === "IMG" && itemEl.closest(".grid-cell")) { touchDraggedItem = itemEl; touchDragFromGrid = true; }
+}, { passive: true });
+
+document.addEventListener("touchmove", e => {
+  if (!touchDraggedItem) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  const cell = el?.closest(".grid-cell");
+  document.querySelectorAll(".grid-cell").forEach(c => c.classList.remove("highlight"));
+  if (cell) cell.classList.add("highlight");
+}, { passive: false });
+
+document.addEventListener("touchend", e => {
+  if (!touchDraggedItem) return;
+  const touch = e.changedTouches[0];
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  const cell = el?.closest(".grid-cell");
+  document.querySelectorAll(".grid-cell").forEach(c => c.classList.remove("highlight"));
+
+  if (cell) {
+    const grid = cell.closest(".grid");
+    if (!touchDragFromGrid) {
+      addToGrid(grid, touchDraggedItem);
+    } else {
+      const oldCell = touchDraggedItem.parentElement;
+      const count = Number(touchDraggedItem.dataset.count || 1);
+      const existing = cell.querySelector(`img[data-name="${touchDraggedItem.dataset.name}"]`);
+      if (existing) {
+        existing.dataset.count = Number(existing.dataset.count) + count;
+        existing.nextSibling.textContent = existing.dataset.count;
+        oldCell.innerHTML = "";
+      } else if (!cell.querySelector("img")) {
+        cell.innerHTML = oldCell.innerHTML;
+        oldCell.innerHTML = "";
+        reattachImgListeners(cell, grid);
+      }
       updateTotals();
     }
   }
-
-  touchDraggedItem = null;
-  touchDragFromGrid = false;
+  touchDraggedItem = null; touchDragFromGrid = false;
 });
 
+/* ===== TOTALS ===== */
+function updateTotals() {
+  const calc = grid => Array.from(grid.querySelectorAll("img"))
+    .reduce((sum, img) => sum + Number(img.dataset.unitValue) * Number(img.dataset.count), 0);
 
-        updateTotals();
-      }
-    });
-  });
-});
-
-// Totals
-function updateTotals(){
-  const calc = grid =>
-    Array.from(grid.querySelectorAll("img"))
-      .reduce((sum, img) =>
-        sum + Number(img.dataset.unitValue) * Number(img.dataset.count), 0);
-
-  const g1 = Number(document.getElementById("galleons1").value) || 0;
-  const g2 = Number(document.getElementById("galleons2").value) || 0;
-
+  const g1 = Number(galleon1.value) || 0;
+  const g2 = Number(galleon2.value) || 0;
   const t1 = calc(grids[0]) + g1;
   const t2 = calc(grids[1]) + g2;
 
@@ -708,88 +714,63 @@ function updateTotals(){
 
   const diff = t2 - t1;
   difference.textContent = (diff > 0 ? "+" : "") + diff.toLocaleString();
-
-  if (diff > 0) {
-    difference.style.color = "#22c55e";
-  } else if (diff < 0) {
-    difference.style.color = "#ef4444";
-  } else {
-    difference.style.color = "#e5e7eb";
-  }
+  difference.style.color = diff > 0 ? "#22c55e" : diff < 0 ? "#ef4444" : "#e5e7eb";
 }
-// Reset button (outside updateTotals)
-resetTrade.addEventListener("click", ()=>{
-  grids.forEach(g =>
-    g.querySelectorAll(".grid-cell").forEach(c => c.innerHTML = "")
-  );
 
+/* ===== RESET ===== */
+document.getElementById("resetTrade").addEventListener("click", () => {
+  grids.forEach(grid => {
+    grid.innerHTML = "";
+    for (let i = 0; i < 8; i++) grid.appendChild(makeCell(grid));
+  });
   galleon1.value = 0;
   galleon2.value = 0;
-
   updateTotals();
 });
 
+/* ===== CONTEXT MENU ===== */
+ctxQuantity.addEventListener("click",    e => e.stopPropagation());
+ctxQuantity.addEventListener("mousedown", e => e.stopPropagation());
+ctxQuantity.addEventListener("input", () => {
+  let v = Number(ctxQuantity.value);
+  if (v > 500) ctxQuantity.value = 500;
+  if (v < 1 || isNaN(v)) ctxQuantity.value = 1;
+});
+contextMenu.addEventListener("click",    e => e.stopPropagation());
+contextMenu.addEventListener("mousedown", e => e.stopPropagation());
 
-// Context menu
-addLeftBtn.addEventListener("click", ()=>{
-  if(!rightClickedItem) return;
+document.getElementById("addLeftBtn").addEventListener("click", () => {
+  if (!rightClickedItem) return;
   addToGrid(grids[0], rightClickedItem, Number(ctxQuantity.value));
-  contextMenu.style.display="none";
+  contextMenu.style.display = "none";
 });
-addRightBtn.addEventListener("click", ()=>{
-  if(!rightClickedItem) return;
+document.getElementById("addRightBtn").addEventListener("click", () => {
+  if (!rightClickedItem) return;
   addToGrid(grids[1], rightClickedItem, Number(ctxQuantity.value));
-  contextMenu.style.display="none";
+  contextMenu.style.display = "none";
 });
+document.addEventListener("click", () => contextMenu.style.display = "none");
 
-document.addEventListener("click", ()=>contextMenu.style.display="none");
+/* ===== SEARCH ===== */
+searchInput.addEventListener("input", () => populateItems(searchInput.value));
 
-// Search
-searchInput.addEventListener("input", ()=>populateItems(searchInput.value));
-
-const galleon1 = document.getElementById("galleons1");
-const galleon2 = document.getElementById("galleons2");
-
+/* ===== GALLEONS ===== */
 function validateGalleons(input) {
-  let value = Number(input.value);
-
-  if (isNaN(value) || value < 0) value = 0;
-  if (value > 250000000) value = 250000000;
-
-  input.value = value;
+  let v = Number(input.value);
+  if (isNaN(v) || v < 0) v = 0;
+  if (v > 250000000) v = 250000000;
+  input.value = v;
 }
+galleon1.addEventListener("input", () => { validateGalleons(galleon1); updateTotals(); });
+galleon2.addEventListener("input", () => { validateGalleons(galleon2); updateTotals(); });
 
-galleon1.addEventListener("input", () => {
-  validateGalleons(galleon1);
-  updateTotals();
-});
-
-galleon2.addEventListener("input", () => {
-  validateGalleons(galleon2);
-  updateTotals();
-});
-
+/* ===== INFO PANEL ===== */
 const infoPanel = document.getElementById("infoPanel");
-const closeInfo = document.getElementById("closeInfo");
-
-// Restore hidden state
-if (localStorage.getItem("infoPanelClosed") === "true") {
-  infoPanel.style.display = "none";
-}
-
-closeInfo.addEventListener("click", () => {
+if (localStorage.getItem("infoPanelClosed") === "true") infoPanel.style.display = "none";
+document.getElementById("closeInfo").addEventListener("click", () => {
   infoPanel.style.display = "none";
   localStorage.setItem("infoPanelClosed", "true");
 });
-
-
-
 </script>
 </body>
 </html>
-
-
-
-
-
-

@@ -507,12 +507,12 @@
   </div>
 
   <!-- ===== FILTER BAR ===== -->
-  <div class="filter-bar">
+    <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="online">Online</button>
-    <button class="filter-btn" data-filter="busy">Busy</button>
-    <button class="filter-btn" data-filter="offline">Offline</button>
-  </div>
+    <button class="filter-btn" data-filter="online">Active</button>
+    <button class="filter-btn" data-filter="busy">Varies</button>
+    <button class="filter-btn" data-filter="offline">Inactive</button>
+    </div>
 
   <!-- ===== MIDDLEMAN GRID ===== -->
   <div class="mm-grid" id="mmGrid">
@@ -589,7 +589,7 @@
     }
 
     function buildCard(mm, i) {
-      const statusLabels = { online: "Online", busy: "Busy", offline: "Offline" };
+        const statusLabels = { online: "Active", busy: "Varies", offline: "Inactive" };
       const avatarHtml = mm.avatar
         ? `<img class="avatar" src="${mm.avatar}" alt="${mm.name}">`
         : `<div class="avatar" style="display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#6366f1;background:#1e293b;">${mm.name.charAt(0).toUpperCase()}</div>`;

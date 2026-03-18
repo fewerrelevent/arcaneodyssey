@@ -321,8 +321,8 @@ input[type="text"]:focus {
       <a href="index.html">Home</a>
       <a href="Paramount-Exchange.html">Value List</a>
       <a href="Paramount-Trade-Calculator.html" class="active">Trade Calculator</a>
-      <a href="Paramount-Middleman.html">Middleman</a>
-      <a href="Paramount-Inflation.html">Market Tracking</a>
+      <a href="#">Submit Values</a>
+      <a href="#">Other Links</a>
     </div>
   </div>
 
@@ -355,7 +355,14 @@ input[type="text"]:focus {
       <div class="galleon-box">
         <input type="number" id="galleons1" placeholder="Galleons" min="0" max="250000000">
       </div>
-      <button id="resetTrade">Reset Trade</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <button id="resetTrade">Reset Trade</button>
+        <button id="shareTradeBtn" style="background:#1e293b;border:1px solid #6366f1;color:#6366f1;border-radius:12px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share Trade
+        </button>
+        <span id="shareFeedback" style="font-size:12px;color:#22c55e;opacity:0;transition:opacity 0.3s ease;font-family:'DM Sans',sans-serif;">Link copied!</span>
+      </div>
       <div class="galleon-box">
         <input type="number" id="galleons2" placeholder="Galleons" min="0" max="250000000">
       </div>
@@ -517,13 +524,9 @@ function addToGrid(grid, item, count = 1) {
     return;
   }
 
-// Place in first empty cell — expand first if full
-  let emptyCell = Array.from(grid.querySelectorAll(".grid-cell")).find(c => !c.querySelector("img"));
-  if (!emptyCell) {
-    expandIfFull(grid);
-    emptyCell = Array.from(grid.querySelectorAll(".grid-cell")).find(c => !c.querySelector("img"));
-    if (!emptyCell) return;
-  }
+  // Place in first empty cell
+  const emptyCell = Array.from(grid.querySelectorAll(".grid-cell")).find(c => !c.querySelector("img"));
+  if (!emptyCell) return;
 
   const img = document.createElement("img");
   img.src              = item.dataset.image;
@@ -578,7 +581,7 @@ function addToGrid(grid, item, count = 1) {
   updateTotals();
 
   // Check if grid is now full and expand if so
-  setTimeout(() => expandIfFull(grid), 0);
+  expandIfFull(grid);
 }
 
 /* ===== FETCH ITEMS ===== */
@@ -590,6 +593,7 @@ fetch(sheetURL).then(res => res.json()).then(data => {
     bossDrop: item.bossDrop === "TRUE"
   }));
   populateItems();
+  document.dispatchEvent(new Event("itemsLoaded"));
 }).catch(err => console.error(err));
 
 /* ===== POPULATE INVENTORY LIST ===== */
@@ -775,6 +779,74 @@ document.getElementById("closeInfo").addEventListener("click", () => {
   infoPanel.style.display = "none";
   localStorage.setItem("infoPanelClosed", "true");
 });
+
+/* ===== SHARE TRADE ===== */
+function encodeTrade() {
+  const data = {
+    g1: Number(galleon1.value) || 0,
+    g2: Number(galleon2.value) || 0,
+    left:  getGridData(grids[0]),
+    right: getGridData(grids[1]),
+  };
+  return btoa(JSON.stringify(data));
+}
+
+function getGridData(grid) {
+  return Array.from(grid.querySelectorAll(".grid-cell")).reduce((acc, cell) => {
+    const img = cell.querySelector("img");
+    if (img) acc.push({ n: img.dataset.name, c: Number(img.dataset.count) });
+    return acc;
+  }, []);
+}
+
+function loadTradeFromHash() {
+  const hash = window.location.hash.slice(1);
+  if (!hash.startsWith("trade=")) return;
+  try {
+    const data = JSON.parse(atob(hash.slice(6)));
+
+    const restore = () => {
+      grids.forEach(grid => { grid.innerHTML = ""; for (let i = 0; i < 8; i++) grid.appendChild(makeCell(grid)); });
+
+      function restoreGrid(grid, entries) {
+        entries.forEach(entry => {
+          const match = items.find(i => i.name === entry.n);
+          if (!match) return;
+          const fakeItem = document.createElement("div");
+          fakeItem.dataset.name     = match.name;
+          fakeItem.dataset.value    = match.value;
+          fakeItem.dataset.image    = match.image;
+          fakeItem.dataset.category = match.category || "";
+          fakeItem.dataset.rarity   = match.rarity   || "";
+          addToGrid(grid, fakeItem, entry.c);
+        });
+      }
+
+      restoreGrid(grids[0], data.left  || []);
+      restoreGrid(grids[1], data.right || []);
+      galleon1.value = data.g1 || 0;
+      galleon2.value = data.g2 || 0;
+      updateTotals();
+    };
+
+    if (items.length > 0) restore();
+    else document.addEventListener("itemsLoaded", restore, { once: true });
+
+  } catch(e) { console.warn("Invalid trade link", e); }
+}
+
+document.getElementById("shareTradeBtn").addEventListener("click", () => {
+  const encoded = encodeTrade();
+  const url = `${location.origin}${location.pathname}#trade=${encoded}`;
+  navigator.clipboard.writeText(url).then(() => {
+    const fb = document.getElementById("shareFeedback");
+    fb.style.opacity = "1";
+    setTimeout(() => fb.style.opacity = "0", 2000);
+  });
+});
+
+// Load trade from URL on page load
+window.addEventListener("load", loadTradeFromHash);
 </script>
 </body>
 </html>

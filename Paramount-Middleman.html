@@ -134,11 +134,11 @@
 
     /* ===== CARD TOP ROW ===== */
     .card-top {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+}
 
     .avatar-wrap {
       position: relative;
@@ -169,21 +169,20 @@
     .status-dot.offline { background: #64748b; }
 
     .card-identity {
-      flex: 1;
-      min-width: 0;
+     flex: 1;
+    min-width: 0;
+    word-break: break-word;
     }
 
     .card-name {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #f1f5f9;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
     }
 
     .verified-badge {

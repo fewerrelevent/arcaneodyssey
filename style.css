@@ -1406,3 +1406,40 @@ html, body {
   font-size: 14px;
   color: #64748b;
 }
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 0 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .trade-container {
+    width: 100%;
+    align-items: center;
+  }
+
+  .trade-side {
+    width: 100%;
+    align-items: center;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, clamp(60px, 20vw, 90px));
+  }
+
+  .bottom-row {
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .galleon-box input {
+    width: 110px;
+  }
+
+  .difference {
+    align-self: center;
+    margin: 8px 0;
+  }
+}

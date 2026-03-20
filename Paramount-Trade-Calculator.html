@@ -18,6 +18,7 @@ body {
   padding: 80px 20px 20px;
   user-select: none;
   margin: 0;
+  box-sizing: border-box;
 }
 
 .main-content {
@@ -46,7 +47,7 @@ h1::after {
   border-radius: 3px;
 }
 
-.search-container { margin-bottom: 6px; width: clamp(300px, 35vw, 560px); }
+.search-container { margin-bottom: 6px; width: clamp(280px, 90vw, 560px); }
 input[type="text"] {
   width: 100%;
   padding: 10px;
@@ -55,6 +56,7 @@ input[type="text"] {
   border: 1px solid #1e293b;
   background: #020617;
   color: #e5e7eb;
+  box-sizing: border-box;
 }
 input[type="text"]:focus {
   outline: none;
@@ -63,7 +65,7 @@ input[type="text"]:focus {
 }
 
 .item-list {
-  width: clamp(300px, 35vw, 560px);
+  width: clamp(280px, 90vw, 560px);
   background: linear-gradient(180deg,#020617,#020617cc);
   margin-bottom: 8px;
   padding: 6px;
@@ -284,15 +286,36 @@ input[type="text"]:focus {
   .trade-container {
     flex-direction: column;
     align-items: center;
-    gap: 25px;
-  }
-  .difference {
-    align-self: center;
-    margin: 10px 0;
+    gap: 20px;
+    width: 100%;
   }
   .trade-side {
     min-width: unset;
     width: 100%;
+    align-items: center;
+  }
+  .grid {
+    grid-template-columns: repeat(4, clamp(60px, 20vw, 90px));
+  }
+  .grid-cell {
+    width: clamp(60px, 20vw, 90px);
+    height: clamp(60px, 20vw, 90px);
+  }
+  .difference {
+    align-self: center;
+    margin: 4px 0;
+  }
+  .galleon-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .galleon-box input {
+    width: 160px;
+  }
+  .bottom-row {
+    justify-content: center;
+    margin-top: 10px;
   }
   .info-panel {
     width: 90%;
@@ -340,6 +363,9 @@ input[type="text"]:focus {
         <div class="trade-title">Items You Will Give</div>
         <div class="total" id="total1">Total: 0</div>
         <div class="grid" id="player1Grid"></div>
+        <div class="galleon-box" style="margin-top:10px;">
+          <input type="number" id="galleons1" placeholder="Galleons" min="0" max="250000000">
+        </div>
       </div>
 
       <div class="difference" id="difference">+0</div>
@@ -348,13 +374,13 @@ input[type="text"]:focus {
         <div class="trade-title">Items You Will Receive</div>
         <div class="total" id="total2">Total: 0</div>
         <div class="grid" id="player2Grid"></div>
+        <div class="galleon-box" style="margin-top:10px;">
+          <input type="number" id="galleons2" placeholder="Galleons" min="0" max="250000000">
+        </div>
       </div>
     </div>
 
     <div class="bottom-row">
-      <div class="galleon-box">
-        <input type="number" id="galleons1" placeholder="Galleons" min="0" max="250000000">
-      </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
         <button id="resetTrade">Reset Trade</button>
         <button id="shareTradeBtn" style="background:#1e293b;border:1px solid #6366f1;color:#6366f1;border-radius:12px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;">
@@ -362,9 +388,6 @@ input[type="text"]:focus {
           Share Trade
         </button>
         <span id="shareFeedback" style="font-size:12px;color:#22c55e;opacity:0;transition:opacity 0.3s ease;font-family:'DM Sans',sans-serif;">Link copied!</span>
-      </div>
-      <div class="galleon-box">
-        <input type="number" id="galleons2" placeholder="Galleons" min="0" max="250000000">
       </div>
     </div>
   </div>

@@ -8,25 +8,20 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-
   table {
     min-width: 500px;
+    border-spacing: 0 4px;
   }
-
+  thead th {
+    position: sticky;
+    top: 60px;
+    z-index: 10;
+    font-size: 12px;
+    padding: 8px 6px;
+  }
   .item-image {
     height: 40px;
   }
-
-thead th {
-  position: sticky;
-  top: 60px;
-  z-index: 10;
-}
-
-table {
-  border-spacing: 0 4px;
-}
-
   td {
     font-size: 12px;
     padding: 6px;

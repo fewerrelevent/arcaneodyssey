@@ -11,14 +11,16 @@
 
   <div class="top-nav">
   <div class="nav-left">Paramount Exchange</div>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="Paramount-Exchange.html" class="active">Value List</a>
     <a href="Paramount-Trade-Calculator.html">Trade Calculator</a>
     <a href="Paramount-Middleman.html">Middlemen</a>
     <a href="Paramount-Inflation.html">Market Tracking</a>
-    
   </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </div>
 
 <h1>The Paramount Exchange</h1>
@@ -459,11 +461,12 @@ const data = history
     }
   });
 
+  /* ===== HAMBURGER MENU ===== */
+  document.getElementById("navHamburger").addEventListener("click", function() {
+    this.classList.toggle("open");
+    document.getElementById("navLinks").classList.toggle("open");
+  });
+
 </script>
 </body>
 </html>
-
-
-
-
-

@@ -13,8 +13,8 @@
 
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1b1f2d);
-  color: #e5e7eb;
+  background: var(--bg-base);
+  color: var(--text-primary);
   padding: 80px 0 20px;
   user-select: none;
   margin: 0;
@@ -45,7 +45,7 @@ h1::after {
   display: block;
   width: 120px;
   height: 3px;
-  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  background: linear-gradient(90deg, var(--gold), var(--teal));
   margin: 6px auto 0;
   border-radius: 3px;
 }
@@ -56,20 +56,20 @@ input[type="text"] {
   padding: 10px;
   font-size: 1.1em;
   border-radius: 6px;
-  border: 1px solid #1e293b;
-  background: #020617;
-  color: #e5e7eb;
+  border: 1px solid var(--bg-card);
+  background: var(--bg-input);
+  color: var(--text-primary);
   box-sizing: border-box;
 }
 input[type="text"]:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 1px #6366f1;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
 }
 
 .item-list {
   width: clamp(280px, 90vw, 560px);
-  background: linear-gradient(180deg,#020617,#020617cc);
+  background: linear-gradient(180deg,var(--bg-input),var(--bg-input)cc);
   margin-bottom: 8px;
   padding: 6px;
   border-radius: 12px;
@@ -91,13 +91,13 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #1e293b;
+  background: var(--bg-card);
   position: relative;
   transition: transform 0.1s, box-shadow 0.15s;
 }
 .item:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 8px #6366f1;
+  box-shadow: 0 0 8px var(--gold);
 }
 .item img {
   border-radius: 0;
@@ -123,7 +123,7 @@ input[type="text"]:focus {
   display: grid;
   grid-template-columns: repeat(4, clamp(70px, 7vw, 110px));
   gap: clamp(4px, 0.5vw, 10px);
-  background: linear-gradient(90deg,#111827,#0f172a);
+  background: linear-gradient(90deg,#111827,var(--bg-deep));
   padding: clamp(6px, 0.6vw, 12px);
   border-radius: 12px;
   /* rows grow automatically as cells are added */
@@ -134,8 +134,8 @@ input[type="text"]:focus {
   overflow: hidden;
   width: clamp(70px, 7vw, 110px);
   height: clamp(70px, 7vw, 110px);
-  background: #020617cc;
-  border: 2px dashed #1e293b;
+  background: var(--bg-input)cc;
+  border: 2px dashed var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,7 +144,7 @@ input[type="text"]:focus {
   position: relative;
   transition: background 0.15s, border-color 0.15s;
 }
-.grid-cell.highlight { background: #334155; border-color: #6366f1; }
+.grid-cell.highlight { background: var(--bg-elevated); border-color: var(--gold); }
 .grid-cell img {
   border-radius: 0;
   width: 100%;
@@ -181,12 +181,12 @@ input[type="text"]:focus {
   font-size: 1.1em;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(180deg,#1e293b,#0f172a);
-  color: #e5e7eb;
+  background: linear-gradient(180deg,var(--bg-card),var(--bg-deep));
+  color: var(--text-primary);
   cursor: pointer;
   transition: background 0.2s, transform 0.05s;
 }
-#resetTrade:hover { background: linear-gradient(180deg,#334155,#1e293b); }
+#resetTrade:hover { background: linear-gradient(180deg,var(--bg-elevated),var(--bg-card)); }
 #resetTrade:active { transform: translateY(1px); }
 
 .difference {
@@ -199,7 +199,7 @@ input[type="text"]:focus {
 .tooltip {
   position: fixed;
   background: rgba(30,41,59,0.95);
-  color: #e5e7eb;
+  color: var(--text-primary);
   padding: 6px 10px;
   border-radius: 6px;
   pointer-events: none;
@@ -213,9 +213,9 @@ input[type="text"]:focus {
 #contextMenu {
   position: absolute;
   display: none;
-  background: linear-gradient(180deg,#1e293b,#0f172a);
-  border: 1px solid #334155;
-  color: #e5e7eb;
+  background: linear-gradient(180deg,var(--bg-card),var(--bg-deep));
+  border: 1px solid var(--bg-elevated);
+  color: var(--text-primary);
   padding: 12px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
@@ -227,9 +227,9 @@ input[type="text"]:focus {
   margin-left: 5px;
   padding: 4px 6px;
   border-radius: 6px;
-  border: 1px solid #334155;
-  background: #020617;
-  color: #e5e7eb;
+  border: 1px solid var(--bg-elevated);
+  background: var(--bg-input);
+  color: var(--text-primary);
 }
 #contextMenu button {
   padding: 6px 10px;
@@ -237,29 +237,29 @@ input[type="text"]:focus {
   margin-right: 5px;
   border-radius: 6px;
   border: none;
-  background: linear-gradient(180deg,#334155,#1e293b);
-  color: #e5e7eb;
+  background: linear-gradient(180deg,var(--bg-elevated),var(--bg-card));
+  color: var(--text-primary);
   cursor: pointer;
   transition: background 0.2s;
 }
-#contextMenu button:hover { background: linear-gradient(180deg,#6366f1,#22d3ee); }
+#contextMenu button:hover { background: linear-gradient(180deg,var(--gold),var(--teal)); }
 
 .info-panel {
   position: fixed;
   top: 120px;
   right: 20px;
   width: 220px;
-  background: linear-gradient(180deg,#1e293b,#0f172a);
-  border: 1px solid #334155;
+  background: linear-gradient(180deg,var(--bg-card),var(--bg-deep));
+  border: 1px solid var(--bg-elevated);
   border-radius: 12px;
   padding: 15px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
   font-size: 0.95em;
-  color: #e5e7eb;
+  color: var(--text-primary);
   line-height: 1.4em;
   z-index: 5000;
 }
-.info-panel strong { color: #6366f1; }
+.info-panel strong { color: var(--gold); }
 
 .trade-side {
   min-width: unset;
@@ -280,10 +280,10 @@ input[type="text"]:focus {
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  color: #94a3b8;
+  color: var(--text-secondary);
   user-select: none;
 }
-.close-info:hover { color: #ef4444; }
+.close-info:hover { color: var(--red); }
 
 @media (max-width: 768px) {
   .trade-container {
@@ -390,11 +390,11 @@ input[type="text"]:focus {
     <div class="bottom-row">
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
         <button id="resetTrade">Reset Trade</button>
-        <button id="shareTradeBtn" style="background:#1e293b;border:1px solid #6366f1;color:#6366f1;border-radius:12px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;">
+        <button id="shareTradeBtn" style="background:var(--bg-card);border:1px solid var(--gold);color:var(--gold);border-radius:12px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share Trade
         </button>
-        <span id="shareFeedback" style="font-size:12px;color:#22c55e;opacity:0;transition:opacity 0.3s ease;font-family:'DM Sans',sans-serif;">Link copied!</span>
+        <span id="shareFeedback" style="font-size:12px;color:var(--green);opacity:0;transition:opacity 0.3s ease;font-family:'DM Sans',sans-serif;">Link copied!</span>
       </div>
     </div>
   </div>
@@ -752,7 +752,7 @@ function updateTotals() {
 
   const diff = t2 - t1;
   difference.textContent = (diff > 0 ? "+" : "") + diff.toLocaleString();
-  difference.style.color = diff > 0 ? "#22c55e" : diff < 0 ? "#ef4444" : "#e5e7eb";
+  difference.style.color = diff > 0 ? "var(--green)" : diff < 0 ? "var(--red)" : "#e5e7eb";
 }
 
 /* ===== RESET ===== */

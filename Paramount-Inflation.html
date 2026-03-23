@@ -12,7 +12,7 @@
   <style>
     body {
       font-family: 'DM Sans', sans-serif;
-      background: linear-gradient(135deg, #0f172a, #1b1f2d);
+      background: var(--bg-base);
       color: #e5e7eb;
       margin: 0;
       padding-top: 60px;
@@ -29,7 +29,7 @@
       font-family: 'Rajdhani', sans-serif;
       font-size: clamp(28px, 4vw, 48px);
       font-weight: 700;
-      color: #f1f5f9;
+      color: var(--text-primary);
       margin: 0 0 12px;
       letter-spacing: 0.5px;
     }
@@ -39,14 +39,14 @@
       display: block;
       width: 120px;
       height: 3px;
-      background: linear-gradient(90deg, #6366f1, #22d3ee);
+      background: linear-gradient(90deg, var(--gold), var(--teal));
       margin: 8px auto 0;
       border-radius: 3px;
     }
 
     .page-header p {
       font-size: 16px;
-      color: #94a3b8;
+      color: var(--text-secondary);
       max-width: 560px;
       margin: 16px auto 0;
       line-height: 1.7;
@@ -64,8 +64,8 @@
     }
 
     .stat-card {
-      background: linear-gradient(145deg, #1e293b, #162133);
-      border: 1px solid #2a3648;
+      background: linear-gradient(145deg, var(--bg-card), var(--bg-card));
+      border: 1px solid var(--border-subtle);
       border-radius: 14px;
       padding: 20px 28px;
       text-align: center;
@@ -86,17 +86,17 @@
       font-family: 'Rajdhani', sans-serif;
       font-size: 28px;
       font-weight: 700;
-      color: #f1f5f9;
+      color: var(--text-primary);
       line-height: 1;
       margin-bottom: 6px;
     }
 
-    .stat-card-value.positive { color: #22c55e; }
-    .stat-card-value.negative { color: #ef4444; }
+    .stat-card-value.positive { color: var(--green); }
+    .stat-card-value.negative { color: var(--red); }
 
     .stat-card-label {
       font-size: 12px;
-      color: #64748b;
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.6px;
     }
@@ -112,9 +112,9 @@
     }
 
     .range-btn {
-      background: #1e293b;
-      color: #94a3b8;
-      border: 1px solid #334155;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--bg-elevated);
       border-radius: 999px;
       padding: 7px 18px;
       font-family: 'DM Sans', sans-serif;
@@ -125,13 +125,13 @@
     }
 
     .range-btn:hover {
-      border-color: #6366f1;
-      color: #f1f5f9;
+      border-color: var(--gold);
+      color: var(--text-primary);
     }
 
     .range-btn.active {
-      background: #6366f1;
-      border-color: #6366f1;
+      background: var(--gold);
+      border-color: var(--gold);
       color: white;
     }
 
@@ -143,8 +143,8 @@
     }
 
     .chart-box {
-      background: linear-gradient(160deg, #1e293b, #131c2e);
-      border: 1px solid #2a3648;
+      background: linear-gradient(160deg, var(--bg-card), var(--bg-deep));
+      border: 1px solid var(--border-subtle);
       border-radius: 20px;
       padding: 32px;
       position: relative;
@@ -171,8 +171,8 @@
     .spinner {
       width: 36px;
       height: 36px;
-      border: 3px solid #1e293b;
-      border-top-color: #6366f1;
+      border: 3px solid var(--bg-card);
+      border-top-color: var(--gold);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
     }
@@ -181,7 +181,7 @@
 
     .loading-text {
       font-size: 14px;
-      color: #64748b;
+      color: var(--text-muted);
     }
 
     /* ===== MOST INFLATED TABLE ===== */
@@ -199,8 +199,8 @@
     }
 
     .table-box {
-      background: linear-gradient(160deg, #1e293b, #131c2e);
-      border: 1px solid #2a3648;
+      background: linear-gradient(160deg, var(--bg-card), var(--bg-deep));
+      border: 1px solid var(--border-subtle);
       border-radius: 20px;
       padding: 24px;
     }
@@ -209,7 +209,7 @@
       font-family: 'Rajdhani', sans-serif;
       font-size: 18px;
       font-weight: 700;
-      color: #f1f5f9;
+      color: var(--text-primary);
       margin: 0 0 16px;
     }
 
@@ -220,7 +220,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
-      border-bottom: 1px solid #1e293b;
+      border-bottom: 1px solid var(--bg-card);
       font-size: 14px;
     }
 
@@ -237,8 +237,8 @@
       font-weight: 700;
     }
 
-    .item-row-change.up   { color: #22c55e; }
-    .item-row-change.down { color: #ef4444; }
+    .item-row-change.up   { color: var(--green); }
+    .item-row-change.down { color: var(--red); }
 
     .no-data {
       color: #475569;
@@ -320,24 +320,24 @@
   </div>
   <div class="table-section">
     <div class="table-box">
-      <h3>📈 Most Inflated <span id="moverLabel" style="font-size:13px;color:#64748b;font-family:'DM Sans',sans-serif;font-weight:400;">(30 days)</span></h3>
+      <h3>📈 Most Inflated <span id="moverLabel" style="font-size:13px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-weight:400;">(30 days)</span></h3>
       <div id="topInflated"><div class="no-data">Loading...</div></div>
     </div>
     <div class="table-box">
-      <h3>📉 Most Deflated <span id="moverLabel2" style="font-size:13px;color:#64748b;font-family:'DM Sans',sans-serif;font-weight:400;">(30 days)</span></h3>
+      <h3>📉 Most Deflated <span id="moverLabel2" style="font-size:13px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-weight:400;">(30 days)</span></h3>
       <div id="topDeflated"><div class="no-data">Loading...</div></div>
     </div>
   </div>
 
   <!-- ===== RECENTLY CHANGED ===== -->
   <div class="chart-wrap" style="margin-bottom:80px;">
-    <div style="background:linear-gradient(160deg,#1e293b,#131c2e);border:1px solid #2a3648;border-radius:20px;padding:28px 32px;">
+    <div style="background:linear-gradient(160deg,var(--bg-card),var(--bg-deep));border:1px solid var(--border-subtle);border-radius:20px;padding:28px 32px;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
         <div>
-          <h3 style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:#f1f5f9;margin:0;">Value Updates</h3>
-          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:#64748b;margin:4px 0 0;" id="recentlyChangedSubtitle">Items changed in the last snapshot</p>
+          <h3 style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary);margin:0;">Value Updates</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-muted);margin:4px 0 0;" id="recentlyChangedSubtitle">Items changed in the last snapshot</p>
         </div>
-        <span id="recentlyChangedCount" style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#6366f1;background:#1e1f3a;border:1px solid #3730a3;border-radius:999px;padding:4px 14px;"></span>
+        <span id="recentlyChangedCount" style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--gold);background:#1e1f3a;border:1px solid #3730a3;border-radius:999px;padding:4px 14px;"></span>
       </div>
       <div id="recentlyChanged" style="margin-top:20px;"><div class="no-data">Loading...</div></div>
     </div>
@@ -368,7 +368,7 @@
       })
       .catch(err => {
         document.getElementById("loadingOverlay").innerHTML =
-          `<div style="color:#ef4444;font-size:14px;padding:20px;text-align:center;">Failed to load data.<br>Check your sheet is public.</div>`;
+          `<div style="color:var(--red);font-size:14px;padding:20px;text-align:center;">Failed to load data.<br>Check your sheet is public.</div>`;
         console.error(err);
       });
 
@@ -438,13 +438,13 @@
           datasets: [{
             label: "Avg Item Value",
             data: avgs,
-            borderColor: "#6366f1",
+            borderColor: "var(--gold)",
             backgroundColor: gradient,
             borderWidth: 2.5,
             pointRadius: dates.length > 30 ? 0 : 4,
             pointHoverRadius: 6,
-            pointBackgroundColor: "#6366f1",
-            pointBorderColor: "#0f172a",
+            pointBackgroundColor: "var(--gold)",
+            pointBorderColor: "var(--bg-deep)",
             pointBorderWidth: 2,
             fill: true,
             tension: 0.35,
@@ -456,11 +456,11 @@
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: "#1e293b",
-              borderColor: "#334155",
+              backgroundColor: "var(--bg-card)",
+              borderColor: "var(--bg-elevated)",
               borderWidth: 1,
-              titleColor: "#f1f5f9",
-              bodyColor: "#94a3b8",
+              titleColor: "var(--text-primary)",
+              bodyColor: "var(--text-secondary)",
               titleFont: { family: "Rajdhani", size: 15, weight: "700" },
               bodyFont:  { family: "DM Sans",  size: 13 },
               padding: 12,
@@ -473,7 +473,7 @@
             x: {
               grid: { color: "rgba(51,65,85,0.4)" },
               ticks: {
-                color: "#64748b",
+                color: "var(--text-muted)",
                 font: { family: "DM Sans", size: 12 },
                 maxTicksLimit: 10,
               }
@@ -481,7 +481,7 @@
             y: {
               grid: { color: "rgba(51,65,85,0.4)" },
               ticks: {
-                color: "#64748b",
+                color: "var(--text-muted)",
                 font: { family: "DM Sans", size: 12 },
                 callback: v => formatVal(v)
               }
@@ -620,7 +620,7 @@
       function buildFeed(items, dir) {
         return items.map(i => {
           const up    = dir === 'up';
-          const color = up ? "#22c55e" : "#ef4444";
+          const color = up ? "var(--green)" : "var(--red)";
           const bg    = up ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)";
           const border= up ? "rgba(34,197,94,0.2)"  : "rgba(239,68,68,0.2)";
           const arrow = up ? "↑" : "↓";
@@ -634,12 +634,12 @@
             ">
               <div style="display:flex;align-items:center;gap:10px;min-width:0;">
                 <span style="font-size:18px;color:${color};flex-shrink:0;">${arrow}</span>
-                <span style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${i.name}</span>
+                <span style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${i.name}</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-                <span style="font-size:13px;color:#64748b;text-decoration:line-through;">${formatVal(i.prev)}</span>
-                <span style="font-size:13px;color:#94a3b8;">→</span>
-                <span style="font-size:13px;color:#f1f5f9;font-weight:600;">${formatVal(i.latest)}</span>
+                <span style="font-size:13px;color:var(--text-muted);text-decoration:line-through;">${formatVal(i.prev)}</span>
+                <span style="font-size:13px;color:var(--text-secondary);">→</span>
+                <span style="font-size:13px;color:var(--text-primary);font-weight:600;">${formatVal(i.latest)}</span>
                 <span style="
                   font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;
                   color:${color};background:${bg};border:1px solid ${border};
@@ -653,12 +653,12 @@
       let html = "";
 
       if (ups.length > 0) {
-        html += `<p style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#22c55e;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px;">↑ Increased (${ups.length})</p>`;
+        html += `<p style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;margin:0 0 10px;">↑ Increased (${ups.length})</p>`;
         html += buildFeed(ups, 'up');
       }
 
       if (downs.length > 0) {
-        html += `<p style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#ef4444;letter-spacing:1px;text-transform:uppercase;margin:${ups.length ? '20px' : '0'} 0 10px;">↓ Decreased (${downs.length})</p>`;
+        html += `<p style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin:${ups.length ? '20px' : '0'} 0 10px;">↓ Decreased (${downs.length})</p>`;
         html += buildFeed(downs, 'down');
       }
 

@@ -335,7 +335,7 @@
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
         <div>
           <h3 style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:#f1f5f9;margin:0;">Value Updates</h3>
-          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:#64748b;margin:4px 0 0;" id="recentlyChangedSubtitle">Items changed in the last snapshot</p>
+          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:#64748b;margin:4px 0 0;" id="recentlyChangedSubtitle">Items changed in the last 7 days</p>
         </div>
         <span id="recentlyChangedCount" style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#6366f1;background:#1e1f3a;border:1px solid #3730a3;border-radius:999px;padding:4px 14px;"></span>
       </div>
@@ -582,32 +582,57 @@
         return;
       }
 
+      // Latest snapshot date
       const latestDate = allDates[allDates.length - 1];
+      const latestMs   = new Date(latestDate).getTime();
 
-      // Find the comparison date: last snapshot within 3 days, or the one just before latest
-      const latestMs = new Date(latestDate).getTime();
-      const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
-      const prevDate = [...allDates]
-        .reverse()
-        .find(d => d !== latestDate && (latestMs - new Date(d).getTime()) <= threeDaysMs)
-        || allDates[allDates.length - 2];
+      // Cutoff = 7 days before the latest snapshot
+      const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+      const cutoffMs    = latestMs - sevenDaysMs;
 
-      subtitleEl.textContent = `Changes since ${formatDate(prevDate)} → ${formatDate(latestDate)}`;
+      // Find the oldest snapshot that falls within the 7-day window
+      // (the one we compare "from")
+      const windowDates = allDates.filter(d => {
+        const ms = new Date(d).getTime();
+        return ms >= cutoffMs && d !== latestDate;
+      });
+
+      if (!windowDates.length) {
+        el.innerHTML = `<div class="no-data">Not enough snapshots in the last 7 days.</div>`;
+        return;
+      }
+
+      const fromDate = windowDates[0]; // oldest within window
+      subtitleEl.textContent = `Changes over the last 7 days (${formatDate(fromDate)} → ${formatDate(latestDate)})`;
 
       const changed = [];
       Object.entries(itemHistory).forEach(([name, entries]) => {
-        const latest = entries.find(e => e.date === latestDate);
-        const prev   = entries.find(e => e.date === prevDate);
-        if (!latest || !prev || latest.value === prev.value) return;
-        const diff = latest.value - prev.value;
-        const pct  = ((diff / prev.value) * 100).toFixed(1);
-        changed.push({ name, prev: prev.value, latest: latest.value, diff, pct: Number(pct) });
+        // Latest value for this item
+        const latestEntry = entries.find(e => e.date === latestDate);
+        if (!latestEntry) return;
+
+        // Oldest entry within the 7-day window for this item
+        const windowEntries = entries
+          .filter(e => {
+            const ms = new Date(e.date).getTime();
+            return ms >= cutoffMs && e.date !== latestDate;
+          })
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        if (!windowEntries.length) return;
+        const prevEntry = windowEntries[0];
+
+        if (latestEntry.value === prevEntry.value) return;
+
+        const diff = latestEntry.value - prevEntry.value;
+        const pct  = ((diff / prevEntry.value) * 100).toFixed(1);
+        changed.push({ name, prev: prevEntry.value, latest: latestEntry.value, diff, pct: Number(pct) });
       });
 
       countEl.textContent = changed.length ? `${changed.length} item${changed.length !== 1 ? 's' : ''} updated` : '';
 
       if (changed.length === 0) {
-        el.innerHTML = `<div class="no-data">No value changes detected since the last snapshot.</div>`;
+        el.innerHTML = `<div class="no-data">No value changes detected in the last 7 days.</div>`;
         return;
       }
 

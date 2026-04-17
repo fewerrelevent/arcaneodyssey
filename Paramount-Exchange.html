@@ -326,10 +326,12 @@ function getFiltered() {
     (!state.unobtainable || i.unobtainable)
   ).sort((a, b) => {
     if (state.sort === "value") {
-      if (a.value == null && b.value != null) return 1;
-      if (b.value == null && a.value != null) return -1;
-      if (a.value == null && b.value == null) return 0;
-      return state.asc ? a.value - b.value : b.value - a.value;
+      const getV = i => i.valueMin != null && i.valueMax != null ? (i.valueMin + i.valueMax) / 2 : i.value;
+      const av = getV(a), bv = getV(b);
+      if (av == null && bv != null) return 1;
+      if (bv == null && av != null) return -1;
+      if (av == null && bv == null) return 0;
+      return state.asc ? av - bv : bv - av;
     }
     if (state.sort === "rarity") {
       const r = rarityRank[a.rarity] - rarityRank[b.rarity];
@@ -337,6 +339,15 @@ function getFiltered() {
     }
     return state.asc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
   });
+}
+
+/* ===== FORMAT VALUE ===== */
+function formatValue(v, vMin, vMax) {
+  if (vMin != null && vMax != null) return `${vMin.toLocaleString()} – ${vMax.toLocaleString()}`;
+  if (vMin != null) return `${vMin.toLocaleString()} – N/A`;
+  if (vMax != null) return `N/A – ${vMax.toLocaleString()}`;
+  if (v == null) return "N/A";
+  return v.toLocaleString();
 }
 
 /* ===== RENDER ===== */
@@ -369,7 +380,7 @@ function renderItems() {
       </td>
       <td>${i.category}</td>
       <td><span class="badge ${i.rarity}">${i.rarity}</span></td>
-      <td>${formatValue(i.value)}</td>
+      <td>${formatValue(i.value, i.valueMin, i.valueMax)}</td>
     `;
     tr.querySelector(".bookmark-btn").addEventListener("click", () => toggleBookmark(i.name));
     tr.querySelector(".item-name").addEventListener("click", () => openChart(i.name));
@@ -390,7 +401,7 @@ function renderItems() {
       <img src="${i.image||''}" onerror="this.src='https://via.placeholder.com/64?text=?'" alt="${i.name}">
       <span class="badge ${i.rarity}" style="font-size:10px;padding:2px 7px;">${i.rarity}</span>
       <span class="card-name">${i.name}</span>
-      <span class="card-value">${formatValue(i.value)}</span>
+      <span class="card-value">${formatValue(i.value, i.valueMin, i.valueMax)}</span>
     `;
     div.querySelector(".card-bm-btn").addEventListener("click", e => { e.stopPropagation(); toggleBookmark(i.name); });
     div.querySelector(".card-name").addEventListener("click", () => openChart(i.name));
@@ -407,7 +418,7 @@ function renderBookmarks() {
     const div = document.createElement("div");
     div.className = "bookmark-item";
     div.onclick = () => toggleBookmark(i.name);
-    div.innerHTML = `<span class="bookmark-name-pill ${i.rarity}">${i.name}</span><strong>${formatValue(i.value)}</strong>`;
+    div.innerHTML = `<span class="bookmark-name-pill ${i.rarity}">${i.name}</span><strong>${formatValue(i.value, i.valueMin, i.valueMax)}</strong>`;
     wrap.appendChild(div);
   });
 }
@@ -482,7 +493,10 @@ fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/She
     items = d.map(i => {
       let v = null;
       if (i.value != null && String(i.value).trim() !== "") { v = Number(i.value); if (isNaN(v)) v = null; }
-      return { ...i, nameLower: i.name.toLowerCase(), value: v, bossDrop: i.bossDrop === "TRUE", sunken: i.sunken === "TRUE", unobtainable: i.unobtainable === "TRUE" };
+      let vMin = null, vMax = null;
+      if (i.valueMin != null && String(i.valueMin).trim() !== "") { vMin = Number(i.valueMin); if (isNaN(vMin)) vMin = null; }
+      if (i.valueMax != null && String(i.valueMax).trim() !== "") { vMax = Number(i.valueMax); if (isNaN(vMax)) vMax = null; }
+      return { ...i, nameLower: i.name.toLowerCase(), value: v, valueMin: vMin, valueMax: vMax, bossDrop: i.bossDrop === "TRUE", sunken: i.sunken === "TRUE", unobtainable: i.unobtainable === "TRUE" };
     });
     readURL();
     renderItems();
@@ -495,8 +509,6 @@ fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/His
   .then(d => {
     historyData = d.map(h => ({ ...h, value: +h.value, date: new Date(h.date + "T00:00:00Z") }));
   });
-
-function formatValue(v) { return v == null ? "N/A" : v.toLocaleString(); }
 
 /* ===== CHART ===== */
 function openChart(name) {

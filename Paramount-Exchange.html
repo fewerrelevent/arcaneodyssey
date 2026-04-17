@@ -492,17 +492,47 @@ fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/She
   .then(d => {
     items = d.map(i => {
       let v = null;
-      if (i.value != null && String(i.value).trim() !== "") { v = Number(i.value); if (isNaN(v)) v = null; }
+      if (i.value != null && String(i.value).trim() !== "") {
+        v = Number(i.value);
+        if (isNaN(v) || v === 0) v = null; // optional: treat 0 as no data
+      }
+
       let vMin = null, vMax = null;
-      if (i.valueMin != null && String(i.valueMin).trim() !== "") { vMin = Number(i.valueMin); if (isNaN(vMin)) vMin = null; }
-      if (i.valueMax != null && String(i.valueMax).trim() !== "") { vMax = Number(i.valueMax); if (isNaN(vMax)) vMax = null; }
-      return { ...i, nameLower: i.name.toLowerCase(), value: v, valueMin: vMin, valueMax: vMax, bossDrop: i.bossDrop === "TRUE", sunken: i.sunken === "TRUE", unobtainable: i.unobtainable === "TRUE" };
+
+      if (i.valueMin != null && String(i.valueMin).trim() !== "") {
+        vMin = Number(i.valueMin);
+        if (isNaN(vMin) || vMin === 0) vMin = null;
+      }
+
+      if (i.valueMax != null && String(i.valueMax).trim() !== "") {
+        vMax = Number(i.valueMax);
+        if (isNaN(vMax) || vMax === 0) vMax = null;
+      }
+
+      return {
+        ...i,
+        nameLower: i.name.toLowerCase(),
+        value: v,
+        valueMin: vMin,
+        valueMax: vMax,
+        bossDrop: i.bossDrop === "TRUE",
+        sunken: i.sunken === "TRUE",
+        unobtainable: i.unobtainable === "TRUE"
+      };
     });
+
     readURL();
     renderItems();
     renderBookmarks();
   })
-  .catch(() => { tableBody.innerHTML = `<tr><td colspan="5" style="padding:20px;opacity:.6;">Failed to load items</td></tr>`; });
+  .catch(() => {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="5" style="padding:20px;opacity:.6;">
+          Failed to load items
+        </td>
+      </tr>`;
+  });
 
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/History")
   .then(r => r.json())

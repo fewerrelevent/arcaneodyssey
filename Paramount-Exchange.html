@@ -346,7 +346,7 @@ function formatValue(v, vMin, vMax) {
   if (vMin != null && vMax != null) return `${vMin.toLocaleString()} – ${vMax.toLocaleString()}`;
   if (vMin != null) return `${vMin.toLocaleString()} – N/A`;
   if (vMax != null) return `N/A – ${vMax.toLocaleString()}`;
-  if (v == null) return "N/A";
+  if (v == null || v === 0) return "N/A"; 
   return v.toLocaleString();
 }
 

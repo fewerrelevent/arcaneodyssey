@@ -640,9 +640,14 @@ function renderDragonLayer1() {
   const groups = {};
   TYPE_ORDER.forEach(t => { groups[t] = []; });
   dragonItems.forEach(item => {
-    const t = TYPE_ORDER.includes(item.type) ? item.type : "Weapon";
+  const t = TYPE_ORDER.find(o => o.toLowerCase() === (item.type || "").toLowerCase().trim());
+  if (t) {
     groups[t].push(item);
-  });
+  } else {
+    groups["Weapon"].push(item); // fallback, but log so you can spot bad data
+    console.warn("Unknown dragon item type:", item.name, "→", item.type);
+  }
+});
 
   let html = "";
   TYPE_ORDER.forEach(type => {

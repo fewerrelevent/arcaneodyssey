@@ -125,6 +125,229 @@ body.card-mode .card-grid     { display: grid; }
   max-height: 90vh;
   overflow-y: auto;
 }
+
+/* ═══════════════════════════════════════════
+   DRAGON MODAL STYLES
+   ═══════════════════════════════════════════ */
+
+#dragonModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 16px;
+}
+#dragonModal.open { display: flex; }
+
+.dm-shell {
+  background: #0d1625;
+  border: 1px solid #1e293b;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 780px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+}
+
+.dm-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid #1e293b;
+  flex-shrink: 0;
+}
+.dm-back {
+  background: #1e293b;
+  border: none;
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.dm-back:hover { background: #334155; color: #f1f5f9; }
+.dm-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  flex: 1;
+}
+.dm-title span { color: #f97316; }
+.dm-close {
+  background: none;
+  border: none;
+  color: #475569;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+.dm-close:hover { color: #f1f5f9; }
+
+.dm-breadcrumb {
+  font-size: 12px;
+  color: #475569;
+  padding: 0 22px 10px;
+  flex-shrink: 0;
+}
+.dm-breadcrumb span { color: #f97316; cursor: pointer; }
+.dm-breadcrumb span:hover { color: #fb923c; text-decoration: underline; }
+
+.dm-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 16px 22px 22px;
+}
+
+/* Layer 1 — item type groups */
+.dg-group { margin-bottom: 24px; }
+.dg-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #1e293b;
+}
+.dg-item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+.dg-item-card {
+  background: #131f30;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 14px 12px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.12s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.dg-item-card:hover {
+  border-color: #f97316;
+  background: #1a1f2a;
+  transform: translateY(-1px);
+}
+.dg-item-card img {
+  width: 48px; height: 48px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.dg-item-name { font-size: 12px; font-weight: 600; color: #cbd5e1; line-height: 1.3; }
+.dg-item-sub  { font-size: 10px; color: #475569; }
+.dg-item-arrow { font-size: 10px; color: #f97316; opacity: 0; transition: opacity 0.15s; }
+.dg-item-card:hover .dg-item-arrow { opacity: 1; }
+
+/* Layer 2 — color grid */
+.dc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.dc-card {
+  background: #131f30;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 14px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+.dc-card:hover { border-color: #334155; }
+.dc-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+.dc-name  { font-size: 12px; font-weight: 700; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; }
+.dc-tag   { font-size: 10px; padding: 2px 7px; border-radius: 99px; font-weight: 600; }
+.dc-value { font-size: 13px; font-weight: 700; color: #f1f5f9; }
+.dc-value.nv { color: #475569; font-weight: 400; font-size: 11px; }
+.dc-note  { font-size: 10px; color: #64748b; line-height: 1.3; }
+
+.tag-common      { background: #1e293b; color: #94a3b8; }
+.tag-rare-dragon { background: #1e1b4b; color: #c4b5fd; }
+
+/* dot colours */
+.dot-red      { background:#ef4444; box-shadow:0 0 7px #ef4444; }
+.dot-green    { background:#22c55e; box-shadow:0 0 7px #22c55e; }
+.dot-teal     { background:#14b8a6; box-shadow:0 0 7px #14b8a6; }
+.dot-blue     { background:#3b82f6; box-shadow:0 0 7px #3b82f6; }
+.dot-purple   { background:#a855f7; box-shadow:0 0 7px #a855f7; }
+.dot-brown    { background:#92400e; box-shadow:0 0 7px #92400e; }
+.dot-black    { background:#374151; box-shadow:0 0 7px #374151; border-color:rgba(255,255,255,0.18)!important; }
+.dot-white    { background:#e2e8f0; box-shadow:0 0 7px #cbd5e1; border-color:rgba(255,255,255,0.4)!important; }
+.dot-golden   { background:#f59e0b; box-shadow:0 0 12px #f59e0b; }
+.dot-acid     { background:#84cc16; box-shadow:0 0 7px #84cc16; }
+.dot-darkness { background:#4c1d95; box-shadow:0 0 7px #7c3aed; }
+.dot-ash      { background:#57534e; box-shadow:0 0 7px #78716c; }
+.dot-blood    { background:#dc2626; box-shadow:0 0 7px #dc2626; }
+.dot-plague   { background:#365314; box-shadow:0 0 7px #4d7c0f; }
+
+/* color name text */
+.cn-red      { color:#fca5a5; } .cn-green    { color:#86efac; }
+.cn-teal     { color:#5eead4; } .cn-blue     { color:#93c5fd; }
+.cn-purple   { color:#d8b4fe; } .cn-brown    { color:#d97706; }
+.cn-black    { color:#9ca3af; } .cn-white    { color:#e2e8f0; }
+.cn-golden   { color:#fcd34d; } .cn-acid     { color:#bef264; }
+.cn-darkness { color:#c4b5fd; } .cn-ash      { color:#a8a29e; }
+.cn-blood    { color:#fca5a5; } .cn-plague   { color:#a3e635; }
+.cn-base     { color:#94a3b8; }
+
+/* single "Dragons" entry badge */
+.dragon-entry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: #1c0a00;
+  color: #f97316;
+  border: 1px solid #7c2d12;
+  font-weight: 700;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.dm-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #475569;
+  font-size: 14px;
+}
+
+@media (max-width: 520px) {
+  .dg-item-grid { grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); }
+  .dc-grid      { grid-template-columns: repeat(auto-fill, minmax(110px,1fr)); }
+  .dm-body      { padding: 12px 14px 18px; }
+}
+
 </style>
 <link rel="icon" href="favicon.png" type="image/png">
 <link rel="stylesheet" href="style.css">
@@ -181,7 +404,6 @@ body.card-mode .card-grid     { display: grid; }
     <button id="sunkenToggle">Sunken</button>
     <button id="unobtainableToggle">Unobtainable</button>
 
-    <!-- MOBILE CARD/TABLE TOGGLE -->
     <button id="viewToggle">
       <svg id="viewIcon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
         <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
@@ -222,7 +444,6 @@ body.card-mode .card-grid     { display: grid; }
       <button onclick="closeChart()" style="font-size:18px;line-height:1;">✕</button>
     </div>
 
-    <!-- RANGE + VIEW TOGGLE ROW -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
       <div id="rangeButtons" style="display:flex;gap:6px;">
         <button data-range="7">7D</button>
@@ -236,12 +457,10 @@ body.card-mode .card-grid     { display: grid; }
       </div>
     </div>
 
-    <!-- GRAPH VIEW -->
     <div id="chartView">
       <canvas id="historyChart" height="220"></canvas>
     </div>
 
-    <!-- TABLE VIEW -->
     <div id="tableView" style="display:none;">
       <div style="max-height:320px;overflow-y:auto;border-radius:8px;border:1px solid #334155;">
         <table id="historyTable">
@@ -253,10 +472,31 @@ body.card-mode .card-grid     { display: grid; }
   </div>
 </div>
 
+<!-- DRAGON TWO-LAYER MODAL -->
+<div id="dragonModal">
+  <div class="dm-shell">
+    <div class="dm-header">
+      <button class="dm-back" id="dmBack" style="display:none" aria-label="Back">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h2 class="dm-title" id="dmTitle">🐉 <span>Dragon</span> Items</h2>
+      <button class="dm-close" id="dmClose">✕</button>
+    </div>
+    <div class="dm-breadcrumb" id="dmBreadcrumb" style="display:none">
+      <span id="dmBreadcrumbHome">Dragon Items</span> › <strong id="dmBreadcrumbItem" style="color:#f1f5f9;"></strong>
+    </div>
+    <div class="dm-body" id="dmBody">
+      <div class="dm-empty">Loading dragon items…</div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
-/* ===== STATE ===== */
+/* ═══════════════════════════════════════════════════════
+   EXISTING EXCHANGE STATE
+   ═══════════════════════════════════════════════════════ */
 const state = {
   search: "", category: "", rarities: new Set(),
   sort: "name", asc: true, boss: false, sunken: false, unobtainable: false
@@ -267,13 +507,263 @@ let items = [];
 let historyData = [];
 let chart, currentItem = "";
 
-const tableBody  = document.getElementById("itemTable");
-const cardGrid   = document.getElementById("cardGrid");
+const tableBody   = document.getElementById("itemTable");
+const cardGrid    = document.getElementById("cardGrid");
 const searchInput = document.getElementById("searchInput");
-const bookmarks  = new Set(JSON.parse(localStorage.getItem("bookmarks") || "[]"));
+const bookmarks   = new Set(JSON.parse(localStorage.getItem("bookmarks") || "[]"));
 const saveBookmarks = () => localStorage.setItem("bookmarks", JSON.stringify([...bookmarks]));
 
-/* ===== URL PERSISTENCE ===== */
+/* ═══════════════════════════════════════════════════════
+   DRAGONS SHEET CONFIG & DATA
+   ═══════════════════════════════════════════════════════
+   Dragons sheet columns:
+     name | type | subtype | source | color | value | valueMin | valueMax | note | image
+
+   type  → Armor | Weapon | Accessory | Ingredient
+   color → red, green, teal, blue, purple, brown, black, white, golden
+           acid, darkness, ash, blood, plague   (corrupted items)
+           base                                 (no-color items e.g. Raw Dragon Meat)
+   ═══════════════════════════════════════════════════════ */
+
+const DRAGON_SHEET_ID  = "1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE";
+const DRAGON_SHEET_TAB = "Dragons";
+
+const REGULAR_COLORS = [
+  { key:"red",    label:"Red",    rarity:"Common"      },
+  { key:"green",  label:"Green",  rarity:"Common"      },
+  { key:"teal",   label:"Teal",   rarity:"Common"      },
+  { key:"blue",   label:"Blue",   rarity:"Common"      },
+  { key:"purple", label:"Purple", rarity:"Common"      },
+  { key:"brown",  label:"Brown",  rarity:"Common"      },
+  { key:"black",  label:"Black",  rarity:"Rare Dragon" },
+  { key:"white",  label:"White",  rarity:"Rare Dragon" },
+  { key:"golden", label:"Golden", rarity:"Rare Dragon" },
+];
+
+const CORRUPTED_COLORS = [
+  { key:"acid",     label:"Acid",     rarity:"Common"      },
+  { key:"darkness", label:"Darkness", rarity:"Common"      },
+  { key:"ash",      label:"Ash",      rarity:"Common"      },
+  { key:"blood",    label:"Blood",    rarity:"Rare Dragon" },
+  { key:"plague",   label:"Plague",   rarity:"Rare Dragon" },
+];
+
+const BASE_COLORS = [{ key:"base", label:"All Colors", rarity:"Common" }];
+
+function colorPaletteFor(name) {
+  const n = name.toLowerCase();
+  if (n.includes("corrupted")) return CORRUPTED_COLORS;
+  if (n.includes("raw dragon meat")) return BASE_COLORS;
+  return REGULAR_COLORS;
+}
+
+let dragonItems  = [];   // [{ name, type, subtype, source, image }]
+let dragonValues = {};   // "Item Name|colorkey" → { value, valueMin, valueMax, note }
+
+const dvKey = (name, color) => `${name}|${color}`;
+const dvGet = (name, color) => dragonValues[dvKey(name, color)] || null;
+
+function parseDNum(v) {
+  if (v == null || String(v).trim() === "") return null;
+  const n = Number(v);
+  return (isNaN(n) || n === 0) ? null : n;
+}
+
+function formatDV(entry) {
+  if (!entry) return null;
+  const { value, valueMin, valueMax } = entry;
+  if (valueMin != null && valueMax != null) return `${valueMin.toLocaleString()} – ${valueMax.toLocaleString()}`;
+  if (valueMin != null) return `${valueMin.toLocaleString()} – N/A`;
+  if (valueMax != null) return `N/A – ${valueMax.toLocaleString()}`;
+  if (value    != null) return value.toLocaleString();
+  return null;
+}
+
+fetch(`https://opensheet.elk.sh/${DRAGON_SHEET_ID}/${encodeURIComponent(DRAGON_SHEET_TAB)}`)
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(rows => {
+    const seen = new Set();
+    rows.forEach(row => {
+      const name    = (row.name    || "").trim();
+      const color   = (row.color   || "").trim().toLowerCase();
+      const type    = (row.type    || "Weapon").trim();
+      const subtype = (row.subtype || "").trim();
+      const source  = (row.source  || "").trim();
+      const image   = (row.image   || "").trim();
+      if (!name) return;
+
+      if (!seen.has(name)) {
+        seen.add(name);
+        dragonItems.push({ name, type, subtype, source, image });
+      }
+
+      if (color) {
+        dragonValues[dvKey(name, color)] = {
+          value:    parseDNum(row.value),
+          valueMin: parseDNum(row.valueMin),
+          valueMax: parseDNum(row.valueMax),
+          note:     (row.note || "").trim()
+        };
+      }
+    });
+  })
+  .catch(err => console.warn("Dragons sheet error:", err));
+
+
+/* ═══════════════════════════════════════════════════════
+   DRAGON MODAL
+   ═══════════════════════════════════════════════════════ */
+const TYPE_ORDER = ["Armor", "Weapon", "Accessory", "Ingredient"];
+
+function openDragonModal() {
+  document.getElementById("dragonModal").classList.add("open");
+  document.getElementById("dmBack").style.display = "none";
+  document.getElementById("dmBreadcrumb").style.display = "none";
+  document.getElementById("dmTitle").innerHTML = '🐉 <span>Dragon</span> Items';
+  renderDragonLayer1();
+}
+
+function closeDragonModal() {
+  document.getElementById("dragonModal").classList.remove("open");
+}
+
+function renderDragonLayer1() {
+  const body = document.getElementById("dmBody");
+  body.scrollTop = 0;
+
+  if (!dragonItems.length) {
+    body.innerHTML = `<div class="dm-empty">No dragon items loaded yet.<br>Check that your <strong>Dragons</strong> sheet tab exists and has data.</div>`;
+    return;
+  }
+
+  const groups = {};
+  TYPE_ORDER.forEach(t => { groups[t] = []; });
+  dragonItems.forEach(item => {
+    const t = TYPE_ORDER.includes(item.type) ? item.type : "Weapon";
+    groups[t].push(item);
+  });
+
+  let html = "";
+  TYPE_ORDER.forEach(type => {
+    const list = groups[type];
+    if (!list.length) return;
+    html += `<div class="dg-group">
+      <div class="dg-group-label">${type}s</div>
+      <div class="dg-item-grid">`;
+    list.forEach(item => {
+      const imgTag = item.image
+        ? `<img src="${item.image}" onerror="this.style.display='none'" alt="">`
+        : `<div style="width:48px;height:48px;background:#1e293b;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;">🐉</div>`;
+      html += `
+        <div class="dg-item-card" data-name="${item.name.replace(/"/g, '&quot;')}">
+          ${imgTag}
+          <span class="dg-item-name">${item.name}</span>
+          ${item.subtype ? `<span class="dg-item-sub">${item.subtype}</span>` : ""}
+          <span class="dg-item-arrow">View colors →</span>
+        </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  body.innerHTML = html;
+  body.querySelectorAll(".dg-item-card").forEach(card => {
+    card.addEventListener("click", () => openDragonLayer2(card.dataset.name));
+  });
+}
+
+function openDragonLayer2(itemName) {
+  const item = dragonItems.find(i => i.name === itemName);
+  if (!item) return;
+
+  document.getElementById("dmTitle").innerHTML = `🐉 <span>${itemName}</span>`;
+  document.getElementById("dmBack").style.display = "flex";
+  document.getElementById("dmBreadcrumb").style.display = "block";
+  document.getElementById("dmBreadcrumbItem").textContent = itemName;
+
+  const body = document.getElementById("dmBody");
+  body.scrollTop = 0;
+
+  const colors = colorPaletteFor(itemName);
+  let html = "";
+
+  if (item.source) {
+    html += `<div style="font-size:12px;color:#64748b;margin-bottom:14px;padding:8px 12px;background:#0f172a;border-radius:8px;border:1px solid #1e293b;">
+      <strong style="color:#94a3b8;">Drop source:</strong> ${item.source}
+    </div>`;
+  }
+
+  html += `<div class="dc-grid">`;
+  colors.forEach(c => {
+    const entry  = dvGet(itemName, c.key);
+    const valStr = formatDV(entry);
+    const isNA   = valStr == null;
+    const note   = entry?.note ? `<span class="dc-note">${entry.note}</span>` : "";
+    html += `
+      <div class="dc-card">
+        <div class="dc-dot dot-${c.key}"></div>
+        <span class="dc-name cn-${c.key}">${c.label}</span>
+        <span class="dc-tag ${c.rarity === 'Rare Dragon' ? 'tag-rare-dragon' : 'tag-common'}">${c.rarity}</span>
+        <span class="dc-value${isNA ? ' nv' : ''}">${isNA ? 'Not Yet Valued' : valStr}</span>
+        ${note}
+      </div>`;
+  });
+  html += `</div>`;
+  body.innerHTML = html;
+}
+
+document.getElementById("dmClose").addEventListener("click", closeDragonModal);
+document.getElementById("dmBack").addEventListener("click", () => {
+  document.getElementById("dmBack").style.display = "none";
+  document.getElementById("dmBreadcrumb").style.display = "none";
+  document.getElementById("dmTitle").innerHTML = '🐉 <span>Dragon</span> Items';
+  renderDragonLayer1();
+});
+document.getElementById("dmBreadcrumbHome").addEventListener("click", () => {
+  document.getElementById("dmBack").style.display = "none";
+  document.getElementById("dmBreadcrumb").style.display = "none";
+  document.getElementById("dmTitle").innerHTML = '🐉 <span>Dragon</span> Items';
+  renderDragonLayer1();
+});
+document.getElementById("dragonModal").addEventListener("click", e => {
+  if (e.target === document.getElementById("dragonModal")) closeDragonModal();
+});
+
+
+/* ═══════════════════════════════════════════════════════
+   SYNTHETIC DRAGON ENTRY (injected into filtered list)
+   ═══════════════════════════════════════════════════════ */
+const DRAGON_KEYWORDS = [
+  "dragon","dragons","dragonscale","dragonbone","dragonwing",
+  "corrupted dragon","heavy dragon","light dragon","dragon set",
+  "dragon scales","dragon talons","raw dragon meat","dragon tooth",
+  "dragon horn","dragon hunter","giant dragon"
+];
+
+const DRAGON_SYNTHETIC = {
+  name: "Dragons", nameLower: "dragons",
+  category: "Boss Drop", rarity: "Legendary",
+  value: null, valueMin: null, valueMax: null,
+  image: "", bossDrop: true, sunken: false, unobtainable: false,
+  isDragon: true
+};
+
+function shouldShowDragonEntry() {
+  // Hide if category filter is active (Dragon has no real category)
+  if (state.category) return false;
+  // Hide if rarity filters are active and don't include Legendary
+  if (state.rarities.size && !state.rarities.has("Legendary")) return false;
+  // Hide if sunken/unobtainable filters are on
+  if (state.sunken || state.unobtainable) return false;
+  // Show if no search, or search matches a dragon keyword
+  if (!state.search) return true;
+  const q = state.search.toLowerCase();
+  return DRAGON_KEYWORDS.some(kw => kw.includes(q) || (q.length >= 2 && kw.startsWith(q)));
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   URL PERSISTENCE
+   ═══════════════════════════════════════════════════════ */
 function readURL() {
   const p = new URLSearchParams(location.search);
   if (p.get("search"))   { state.search = p.get("search"); searchInput.value = state.search; }
@@ -289,7 +779,7 @@ function readURL() {
     });
     document.getElementById("rarityBtn").textContent = `Rarities (${state.rarities.size})`;
   }
-  if (p.get("sort"))         state.sort = p.get("sort");
+  if (p.get("sort")) state.sort = p.get("sort");
   if (p.get("asc") === "false") state.asc = false;
   ["boss","sunken","unobtainable"].forEach(k => {
     if (p.get(k) === "true") {
@@ -315,7 +805,10 @@ function writeURL() {
   window.history.replaceState(null, "", qs ? "?" + qs : location.pathname);
 }
 
-/* ===== FILTER + SORT ===== */
+
+/* ═══════════════════════════════════════════════════════
+   FILTER + SORT
+   ═══════════════════════════════════════════════════════ */
 function getFiltered() {
   return items.filter(i =>
     i.nameLower.includes(state.search) &&
@@ -341,16 +834,22 @@ function getFiltered() {
   });
 }
 
-/* ===== FORMAT VALUE ===== */
+
+/* ═══════════════════════════════════════════════════════
+   FORMAT VALUE
+   ═══════════════════════════════════════════════════════ */
 function formatValue(v, vMin, vMax) {
   if (vMin != null && vMax != null) return `${vMin.toLocaleString()} – ${vMax.toLocaleString()}`;
   if (vMin != null) return `${vMin.toLocaleString()} – N/A`;
   if (vMax != null) return `N/A – ${vMax.toLocaleString()}`;
-  if (v == null || Number(v) === 0) return "N/A"; 
+  if (v == null || Number(v) === 0) return "N/A";
   return v.toLocaleString();
 }
 
-/* ===== RENDER ===== */
+
+/* ═══════════════════════════════════════════════════════
+   RENDER
+   ═══════════════════════════════════════════════════════ */
 function toggleBookmark(name) {
   bookmarks.has(name) ? bookmarks.delete(name) : bookmarks.add(name);
   saveBookmarks();
@@ -361,52 +860,99 @@ function toggleBookmark(name) {
 function renderItems() {
   writeURL();
   const filtered = getFiltered();
+
+  // Inject synthetic dragon entry if applicable
+  if (shouldShowDragonEntry()) {
+    filtered.unshift(DRAGON_SYNTHETIC);
+  }
+
   const empty = `<tr><td colspan="5" style="padding:20px;opacity:.6;">No items found</td></tr>`;
 
-  // TABLE
+  /* ── TABLE ── */
   tableBody.innerHTML = "";
-  if (!filtered.length) { tableBody.innerHTML = empty; }
-  else filtered.forEach(i => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td><img class="item-image" src="${i.image||''}" onerror="this.src='https://via.placeholder.com/64?text=?'"></td>
-      <td style="text-align:left">
-        <div class="item-name-cell">
-          <button class="bookmark-btn ${bookmarks.has(i.name) ? "active" : ""}">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
-          </button>
-          <span class="item-name" style="cursor:pointer;color:#60a5fa">${i.name}</span>
-        </div>
-      </td>
-      <td>${i.category}</td>
-      <td><span class="badge ${i.rarity}">${i.rarity}</span></td>
-      <td>${formatValue(i.value, i.valueMin, i.valueMax)}</td>
-    `;
-    tr.querySelector(".bookmark-btn").addEventListener("click", () => toggleBookmark(i.name));
-    tr.querySelector(".item-name").addEventListener("click", () => openChart(i.name));
-    tableBody.appendChild(tr);
-  });
+  if (!filtered.length) {
+    tableBody.innerHTML = empty;
+  } else {
+    filtered.forEach(i => {
+      const tr = document.createElement("tr");
 
-  // CARD GRID
+      if (i.isDragon) {
+        // Dragon synthetic row
+        tr.innerHTML = `
+          <td><div style="width:40px;height:40px;background:#1e293b;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;">🐉</div></td>
+          <td style="text-align:left">
+            <div class="item-name-cell">
+              <span class="item-name" style="cursor:pointer;color:#f97316;font-weight:700;">Dragons</span>
+              <span class="dragon-entry-badge">Browse Items →</span>
+            </div>
+          </td>
+          <td>Boss Drop</td>
+          <td><span class="badge Legendary">Legendary</span></td>
+          <td><span style="color:#f97316;font-size:12px;font-style:italic;">See Items →</span></td>
+        `;
+        tr.querySelector(".item-name").addEventListener("click", openDragonModal);
+        tr.querySelector(".dragon-entry-badge").addEventListener("click", openDragonModal);
+        tableBody.appendChild(tr);
+        return;
+      }
+
+      // Normal row
+      tr.innerHTML = `
+        <td><img class="item-image" src="${i.image||''}" onerror="this.src='https://via.placeholder.com/64?text=?'"></td>
+        <td style="text-align:left">
+          <div class="item-name-cell">
+            <button class="bookmark-btn ${bookmarks.has(i.name) ? "active" : ""}">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+            </button>
+            <span class="item-name" style="cursor:pointer;color:#60a5fa">${i.name}</span>
+          </div>
+        </td>
+        <td>${i.category}</td>
+        <td><span class="badge ${i.rarity}">${i.rarity}</span></td>
+        <td>${formatValue(i.value, i.valueMin, i.valueMax)}</td>
+      `;
+      tr.querySelector(".bookmark-btn").addEventListener("click", () => toggleBookmark(i.name));
+      tr.querySelector(".item-name").addEventListener("click", () => openChart(i.name));
+      tableBody.appendChild(tr);
+    });
+  }
+
+  /* ── CARD GRID ── */
   cardGrid.innerHTML = "";
   if (!filtered.length) {
     cardGrid.innerHTML = `<div style="padding:20px;opacity:.6;grid-column:1/-1;">No items found</div>`;
-  } else filtered.forEach(i => {
-    const div = document.createElement("div");
-    div.className = "item-card";
-    div.innerHTML = `
-      <button class="card-bm-btn ${bookmarks.has(i.name) ? "active" : ""}">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
-      </button>
-      <img src="${i.image||''}" onerror="this.src='https://via.placeholder.com/64?text=?'" alt="${i.name}">
-      <span class="badge ${i.rarity}" style="font-size:10px;padding:2px 7px;">${i.rarity}</span>
-      <span class="card-name">${i.name}</span>
-      <span class="card-value">${formatValue(i.value, i.valueMin, i.valueMax)}</span>
-    `;
-    div.querySelector(".card-bm-btn").addEventListener("click", e => { e.stopPropagation(); toggleBookmark(i.name); });
-    div.querySelector(".card-name").addEventListener("click", () => openChart(i.name));
-    cardGrid.appendChild(div);
-  });
+  } else {
+    filtered.forEach(i => {
+      const div = document.createElement("div");
+      div.className = "item-card";
+
+      if (i.isDragon) {
+        div.style.cursor = "pointer";
+        div.innerHTML = `
+          <div style="font-size:32px;line-height:1;margin-top:4px;">🐉</div>
+          <span class="badge Legendary" style="font-size:10px;padding:2px 7px;">Legendary</span>
+          <span class="card-name" style="color:#f97316;font-weight:700;">Dragons</span>
+          <span class="card-value" style="color:#f97316;font-size:11px;">See Items →</span>
+        `;
+        div.addEventListener("click", openDragonModal);
+        cardGrid.appendChild(div);
+        return;
+      }
+
+      div.innerHTML = `
+        <button class="card-bm-btn ${bookmarks.has(i.name) ? "active" : ""}">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+        </button>
+        <img src="${i.image||''}" onerror="this.src='https://via.placeholder.com/64?text=?'" alt="${i.name}">
+        <span class="badge ${i.rarity}" style="font-size:10px;padding:2px 7px;">${i.rarity}</span>
+        <span class="card-name">${i.name}</span>
+        <span class="card-value">${formatValue(i.value, i.valueMin, i.valueMax)}</span>
+      `;
+      div.querySelector(".card-bm-btn").addEventListener("click", e => { e.stopPropagation(); toggleBookmark(i.name); });
+      div.querySelector(".card-name").addEventListener("click", () => openChart(i.name));
+      cardGrid.appendChild(div);
+    });
+  }
 }
 
 function renderBookmarks() {
@@ -423,7 +969,10 @@ function renderBookmarks() {
   });
 }
 
-/* ===== EVENTS ===== */
+
+/* ═══════════════════════════════════════════════════════
+   EVENTS
+   ═══════════════════════════════════════════════════════ */
 document.addEventListener("click", e => {
   document.querySelectorAll(".dropdown").forEach(d => { if (!d.contains(e.target)) d.classList.remove("open"); });
   const rangeBtn = e.target.closest("#rangeButtons button");
@@ -433,6 +982,10 @@ document.addEventListener("click", e => {
     setRange(+rangeBtn.dataset.range);
   }
   if (e.target === document.getElementById("chartModal")) closeChart();
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") { closeChart(); closeDragonModal(); }
 });
 
 document.getElementById("categoryBtn").onclick = e => { e.stopPropagation(); document.getElementById("categorySelect").classList.toggle("open"); };
@@ -475,7 +1028,6 @@ document.querySelectorAll(".sort-btn").forEach(btn => {
   };
 });
 
-/* VIEW TOGGLE */
 let isCardView = false;
 document.getElementById("viewToggle").onclick = () => {
   isCardView = !isCardView;
@@ -486,7 +1038,10 @@ document.getElementById("viewToggle").onclick = () => {
     : `<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>`;
 };
 
-/* ===== DATA LOAD ===== */
+
+/* ═══════════════════════════════════════════════════════
+   DATA LOAD (Sheet1 — existing items)
+   ═══════════════════════════════════════════════════════ */
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/Sheet1")
   .then(r => r.json())
   .then(d => {
@@ -494,44 +1049,32 @@ fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/She
       let v = null;
       if (i.value != null && String(i.value).trim() !== "") {
         v = Number(i.value);
-        if (isNaN(v) || v === 0) v = null; // optional: treat 0 as no data
+        if (isNaN(v) || v === 0) v = null;
       }
-
       let vMin = null, vMax = null;
-
       if (i.valueMin != null && String(i.valueMin).trim() !== "") {
         vMin = Number(i.valueMin);
         if (isNaN(vMin) || vMin === 0) vMin = null;
       }
-
       if (i.valueMax != null && String(i.valueMax).trim() !== "") {
         vMax = Number(i.valueMax);
         if (isNaN(vMax) || vMax === 0) vMax = null;
       }
-
       return {
         ...i,
         nameLower: i.name.toLowerCase(),
-        value: v,
-        valueMin: vMin,
-        valueMax: vMax,
-        bossDrop: i.bossDrop === "TRUE",
-        sunken: i.sunken === "TRUE",
+        value: v, valueMin: vMin, valueMax: vMax,
+        bossDrop:     i.bossDrop     === "TRUE",
+        sunken:       i.sunken       === "TRUE",
         unobtainable: i.unobtainable === "TRUE"
       };
     });
-
     readURL();
     renderItems();
     renderBookmarks();
   })
   .catch(() => {
-    tableBody.innerHTML = `
-      <tr>
-        <td colspan="5" style="padding:20px;opacity:.6;">
-          Failed to load items
-        </td>
-      </tr>`;
+    tableBody.innerHTML = `<tr><td colspan="5" style="padding:20px;opacity:.6;">Failed to load items</td></tr>`;
   });
 
 fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/History")
@@ -540,7 +1083,10 @@ fetch("https://opensheet.elk.sh/1jwgNgbyvErRNKduisvOkzX_zZYFAilWIiAC0nrmw2ZE/His
     historyData = d.map(h => ({ ...h, value: +h.value, date: new Date(h.date + "T00:00:00Z") }));
   });
 
-/* ===== CHART ===== */
+
+/* ═══════════════════════════════════════════════════════
+   CHART
+   ═══════════════════════════════════════════════════════ */
 function openChart(name) {
   currentItem = name;
   document.getElementById("chartTitle").textContent = name;
@@ -553,7 +1099,6 @@ function closeChart() {
   chart?.destroy();
 }
 
-/* ===== GRAPH / TABLE TOGGLE ===== */
 document.getElementById("showChartBtn").addEventListener("click", function() {
   document.getElementById("chartView").style.display = "";
   document.getElementById("tableView").style.display = "none";
@@ -576,7 +1121,6 @@ function setRange(days) {
     .filter(h => h.name?.trim().toLowerCase() === currentItem.trim().toLowerCase() && h.date instanceof Date && !isNaN(h.date) && h.date >= cutoff)
     .sort((a, b) => a.date - b.date);
 
-  // Chart
   const ctx = document.getElementById("historyChart");
   chart?.destroy();
   chart = new Chart(ctx, {
@@ -591,7 +1135,6 @@ function setRange(days) {
     }
   });
 
-  // Raw history table — newest first
   const tbody = document.getElementById("historyTableBody");
   tbody.innerHTML = "";
   if (!data.length) {
@@ -617,16 +1160,19 @@ function setRange(days) {
   });
 }
 
-/* ===== SCROLL SHADOW ===== */
+
+/* ═══════════════════════════════════════════════════════
+   SCROLL SHADOW + HAMBURGER
+   ═══════════════════════════════════════════════════════ */
 window.addEventListener("scroll", () => {
   document.querySelector(".top-nav").style.boxShadow = window.scrollY > 10 ? "0 4px 12px rgba(0,0,0,0.4)" : "none";
 });
 
-/* ===== HAMBURGER ===== */
 document.getElementById("navHamburger").addEventListener("click", function() {
   this.classList.toggle("open");
   document.getElementById("navLinks").classList.toggle("open");
 });
+
 </script>
 </body>
 </html>

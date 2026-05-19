@@ -754,18 +754,9 @@ const DRAGON_SYNTHETIC = {
 };
 
 function shouldShowDragonEntry() {
-  // Hide if category filter is active (Dragon has no real category)
-  if (state.category) return false;
-  // Hide if rarity filters are active and don't include Legendary
-  if (state.rarities.size && !state.rarities.has("Legendary")) return false;
-  // Hide if sunken/unobtainable filters are on
-  if (state.sunken || state.unobtainable) return false;
-  // Show if no search, or search matches a dragon keyword
-  if (!state.search) return true;
-  const q = state.search.toLowerCase();
-  return DRAGON_KEYWORDS.some(kw => kw.includes(q) || (q.length >= 2 && kw.startsWith(q)));
+  if (!state.search) return false;
+  return "dragons".includes(state.search.toLowerCase());
 }
-
 
 /* ═══════════════════════════════════════════════════════
    URL PERSISTENCE

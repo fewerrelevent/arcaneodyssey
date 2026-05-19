@@ -754,7 +754,7 @@ const DRAGON_SYNTHETIC = {
 };
 
 function shouldShowDragonEntry() {
-  if (!state.search) return false;
+  if (!state.search) return true;
   return "dragons".includes(state.search.toLowerCase());
 }
 
@@ -859,9 +859,9 @@ function renderItems() {
   const filtered = getFiltered();
 
   // Inject synthetic dragon entry if applicable
-  if (shouldShowDragonEntry()) {
-    filtered.unshift(DRAGON_SYNTHETIC);
-  }
+if (shouldShowDragonEntry()) {
+  filtered.push(DRAGON_SYNTHETIC);
+}
 
   const empty = `<tr><td colspan="5" style="padding:20px;opacity:.6;">No items found</td></tr>`;
 

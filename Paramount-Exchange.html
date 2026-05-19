@@ -754,6 +754,7 @@ const DRAGON_SYNTHETIC = {
 };
 
 function shouldShowDragonEntry() {
+  if (state.sunken || state.unobtainable) return false;
   if (!state.search) return true;
   return "dragons".includes(state.search.toLowerCase());
 }

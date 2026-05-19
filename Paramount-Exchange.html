@@ -856,13 +856,14 @@ function toggleBookmark(name) {
 
 function renderItems() {
   writeURL();
-if (shouldShowDragonEntry()) {
-  filtered.push(DRAGON_SYNTHETIC);
-}
+  
+const filtered = getFiltered();
 
-  // Inject synthetic dragon entry if applicable
 if (shouldShowDragonEntry()) {
-  filtered.push(DRAGON_SYNTHETIC);
+  // Insert in correct alphabetical position
+  const idx = filtered.findIndex(i => i.name.localeCompare("Dragons") > 0);
+  if (idx === -1) filtered.push(DRAGON_SYNTHETIC);
+  else filtered.splice(idx, 0, DRAGON_SYNTHETIC);
 }
 
   const empty = `<tr><td colspan="5" style="padding:20px;opacity:.6;">No items found</td></tr>`;

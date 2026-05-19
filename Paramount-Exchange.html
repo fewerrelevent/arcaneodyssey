@@ -856,7 +856,9 @@ function toggleBookmark(name) {
 
 function renderItems() {
   writeURL();
-  const filtered = getFiltered();
+if (shouldShowDragonEntry()) {
+  filtered.push(DRAGON_SYNTHETIC);
+}
 
   // Inject synthetic dragon entry if applicable
 if (shouldShowDragonEntry()) {

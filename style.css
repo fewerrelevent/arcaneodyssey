@@ -88,6 +88,7 @@ a {
   font-weight: 500;
   transition: color 0.2s ease, transform 0.1s;
   margin-top: 0;
+  align-items: center;
 }
 
 .nav-links a:hover {

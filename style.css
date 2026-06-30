@@ -1476,3 +1476,19 @@ html, body {
   font-size: 14px;
   color: #64748b;
 }
+
+.discord-hero-btn {
+  background: #5865F2;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.discord-hero-btn:hover {
+  background: #4752c4;
+}
+.btn-discord-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}

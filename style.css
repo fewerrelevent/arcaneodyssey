@@ -1501,6 +1501,8 @@ html, body {
   padding: 6px 14px;
   border-radius: 6px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
 }
 .nav-discord-btn:hover {
   background: #4752c4;

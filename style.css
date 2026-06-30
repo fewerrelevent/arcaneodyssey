@@ -1493,3 +1493,14 @@ html, body {
   height: 18px;
   fill: currentColor;
 }
+
+.nav-discord-btn {
+  background: #5865F2;
+  color: #fff !important;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.nav-discord-btn:hover {
+  background: #4752c4;
+}

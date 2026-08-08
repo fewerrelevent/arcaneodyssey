@@ -79,7 +79,6 @@ a {
 .nav-links {
   display: flex;
   gap: 20px;
-  align-items: center;
 }
 
 .nav-links a {
@@ -89,7 +88,6 @@ a {
   font-weight: 500;
   transition: color 0.2s ease, transform 0.1s;
   margin-top: 0;
-  align-items: center;
 }
 
 .nav-links a:hover {
@@ -578,7 +576,6 @@ td:first-child {
   line-height: 1.5;
   text-shadow: 0 1px 6px rgba(0,0,0,0.3);
   font-family: 'DM Sans', sans-serif;
-  text-align: center;
 }
 
 .hero-buttons {
@@ -707,6 +704,79 @@ td:first-child {
 
 .service-item.card-visible:hover::before {
   opacity: 0.08;
+}
+
+/* ===== RESOURCE LINK (guides/resources page) ===== */
+.resource-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 8px;
+  padding: 6px 16px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  color: #a5b4fc;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.resource-link:hover {
+  border-color: #6366f1;
+  color: #f1f5f9;
+  background: #273449;
+  transform: translateY(-2px);
+}
+
+.resource-blurb {
+  display: block;
+  margin-top: 6px;
+}
+
+/* ===== NAV DISCORD BUTTON ===== */
+.nav-discord-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #5865F2;
+  color: #ffffff !important;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  margin-top: 0;
+}
+
+.nav-discord-btn:hover {
+  background: #4752c4;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.nav-discord-btn.active::after {
+  display: none;
+}
+
+/* ===== HERO DISCORD BUTTON ===== */
+.discord-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #5865F2;
+}
+
+.discord-hero-btn:hover {
+  background: #4752c4;
+  box-shadow: 0 6px 20px rgba(88,101,242,0.45);
+}
+
+.btn-discord-icon {
+  width: 18px;
+  height: 18px;
+  fill: white;
+  flex-shrink: 0;
 }
 
 /* ===== DISCORD CTA SECTION ===== */
@@ -1478,36 +1548,4 @@ html, body {
 .loading-text {
   font-size: 14px;
   color: #64748b;
-}
-
-.discord-hero-btn {
-  background: #5865F2;
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.discord-hero-btn:hover {
-  background: #4752c4;
-}
-.btn-discord-icon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-
-.nav-discord-btn {
-  background: #5865F2;
-  color: #fff !important;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  align-self: center;
-  line-height: normal;
-  box-sizing: border-box;
-}
-.nav-discord-btn:hover {
-  background: #4752c4;
 }

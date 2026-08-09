@@ -736,6 +736,21 @@ td:first-child {
   margin-top: 6px;
 }
 
+.resource-logo,
+.service-item img {
+  width: 56px;
+  height: 56px;
+  max-width: 56px;
+  max-height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #334155;
+  background: #0f172a;
+  margin: 0 auto 14px;
+  display: block;
+  flex-shrink: 0;
+}
+
 /* ===== NAV DISCORD BUTTON ===== */
 .nav-discord-btn {
   display: inline-flex;

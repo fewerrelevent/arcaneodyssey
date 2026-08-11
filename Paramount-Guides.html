@@ -6,16 +6,18 @@
   <title>Paramount Exchange — Guides & Resources</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.png" type="image/png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,0..40,400&display=swap" rel="stylesheet">
 
   <style>
     /* ===== GUIDE CATEGORY INDICATORS ===== */
+    .service-item[data-category] { border-top: 3px solid transparent; }
 
     .guide-category {
       display: inline-block;
       align-self: center;
+      position: relative;
+      z-index: 2;
       margin: 0 auto 10px;
       padding: 4px 10px;
       border-radius: 999px;
@@ -28,93 +30,23 @@
     }
 
     /* Macros — Purple */
-    .service-item[data-category="macros"] {
-      border-top: 3px solid #a855f7;
-    }
-
-    .service-item[data-category="macros"] .guide-category {
-      color: #d8b4fe;
-      background: rgba(168, 85, 247, 0.12);
-      border-color: rgba(168, 85, 247, 0.35);
-    }
+    .service-item[data-category="macros"] { border-top-color: #a855f7; }
+    .service-item[data-category="macros"] .guide-category { color: #d8b4fe; background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.35); }
 
     /* Tools — Cyan */
-    .service-item[data-category="tools"] {
-      border-top: 3px solid #22d3ee;
-    }
-
-    .service-item[data-category="tools"] .guide-category {
-      color: #67e8f9;
-      background: rgba(34, 211, 238, 0.10);
-      border-color: rgba(34, 211, 238, 0.35);
-    }
+    .service-item[data-category="tools"] { border-top-color: #22d3ee; }
+    .service-item[data-category="tools"] .guide-category { color: #67e8f9; background: rgba(34, 211, 238, 0.10); border-color: rgba(34, 211, 238, 0.35); }
 
     /* Reference Sheets — Green */
-    .service-item[data-category="sheets"] {
-      border-top: 3px solid #22c55e;
-    }
-
-    .service-item[data-category="sheets"] .guide-category {
-      color: #86efac;
-      background: rgba(34, 197, 94, 0.10);
-      border-color: rgba(34, 197, 94, 0.35);
-    }
-
-    /* Keep the category indicator above the card's decorative overlay */
-    .guide-category {
-      position: relative;
-      z-index: 2;
-    }
-
-.service-item[data-category="macros"] {
-    border-top: 2px solid #a855f7;
-}
-
-.service-item[data-category="tools"] {
-    border-top: 2px solid #22d3ee;
-}
-
-.service-item[data-category="sheets"] {
-    border-top: 2px solid #22c55e;
-}
-
-.resource-category {
-    display: inline-block;
-    margin-bottom: 8px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    background: rgba(99, 102, 241, 0.12);
-    color: #818cf8;
-}
-
-.service-item[data-category="macros"] .resource-category {
-    background: rgba(168, 85, 247, 0.12);
-    color: #c084fc;
-}
-
-.service-item[data-category="tools"] .resource-category {
-    background: rgba(34, 211, 238, 0.12);
-    color: #67e8f9;
-}
-
-.service-item[data-category="sheets"] .resource-category {
-    background: rgba(34, 197, 94, 0.12);
-    color: #86efac;
-}
-    
+    .service-item[data-category="sheets"] { border-top-color: #22c55e; }
+    .service-item[data-category="sheets"] .guide-category { color: #86efac; background: rgba(34, 197, 94, 0.10); border-color: rgba(34, 197, 94, 0.35); }
   </style>
 </head>
-
 <body>
 
   <!-- ===== TOP NAV ===== -->
   <div class="top-nav">
     <div class="nav-left">Paramount Exchange</div>
-
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="Paramount-Exchange.html">Value List</a>
@@ -124,24 +56,14 @@
       <a href="Paramount-Guides.html" class="active">Guides</a>
       <a href="https://discord.gg/27jfx4G6ks" target="_blank" class="nav-discord-btn">Discord</a>
     </div>
-
-    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
-
 
   <!-- ===== PAGE HEADER ===== -->
   <header class="page-header">
     <h1>Guides &amp; Resources</h1>
-    <p>
-      A page dedicated to organizing and providing free access to any tools,
-      guides, information, or resources.
-    </p>
+    <p>A page dedicated to organizing and providing free access to any tools, guides, information, or resources.</p>
   </header>
-
 
   <!-- ===== GUIDES SECTION ===== -->
   <section class="services-section">
@@ -154,475 +76,167 @@
       <button class="filter-btn" data-filter="sheets">Reference Sheets</button>
     </div>
 
-
     <div class="services-grid" id="guidesGrid">
 
-      <!-- ===== TOOLS ===== -->
+      <div class="service-item" data-category="tools">
+        <div class="guide-category">TOOL</div>
+        <div class="service-title">Gear Builder (AO Tools)</div>
+        <div class="service-desc">
+          <a href="https://aotools.woodyloody.com/gearBuilder" target="_blank" rel="noopener noreferrer" class="resource-link">Open AO Tools</a>
+        </div>
+      </div>
 
       <div class="service-item" data-category="tools">
-
         <div class="guide-category">TOOL</div>
-
-        <div class="service-title">
-          Gear Builder (AO Tools)
-        </div>
-
+        <div class="service-title">Yummer's Tools</div>
         <div class="service-desc">
-          <a
-            href="https://aotools.woodyloody.com/gearBuilder"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="resource-link"
-          >
-            Open AO Tools
-          </a>
+          <a href="https://perchance.org/yummers-tools" target="_blank" rel="noopener noreferrer" class="resource-link">Open Yummer's Tools</a>
         </div>
-
       </div>
-
-
-      <div class="service-item" data-category="tools">
-
-        <div class="guide-category">TOOL</div>
-
-        <div class="service-title">
-          Yummer's Tools
-        </div>
-
-        <div class="service-desc">
-          <a
-            href="https://perchance.org/yummers-tools"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="resource-link"
-          >
-            Open Yummer's Tools
-          </a>
-        </div>
-
-      </div>
-
-
-      <!-- ===== REFERENCE SHEETS ===== -->
 
       <div class="service-item" data-category="sheets">
-
         <div class="guide-category">REFERENCE SHEET</div>
-
-        <div class="service-title">
-          Grimoire of The Snow Witch
-        </div>
-
+        <div class="service-title">Grimoire of The Snow Witch</div>
         <div class="service-desc">
-          <a
-            href="https://docs.google.com/spreadsheets/d/12Gl1ZQvX70HXAA7kL1PPLgUUFgdL4QJY0fJfd5nogEM/edit?gid=999989270#gid=999989270"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="resource-link"
-          >
-            Open Potion Book
-          </a>
+          <a href="https://docs.google.com/spreadsheets/d/12Gl1ZQvX70HXAA7kL1PPLgUUFgdL4QJY0fJfd5nogEM/edit?gid=999989270#gid=999989270" target="_blank" rel="noopener noreferrer" class="resource-link">Open Potion Book</a>
         </div>
-
       </div>
-
-
-      <!-- ===== MACRO PLACEHOLDER ===== -->
 
       <div class="service-item" data-category="macros">
-
         <div class="guide-category">MACRO</div>
-
-        <div class="service-title">
-          placeholder
-        </div>
-
-        <div class="service-desc">
-          placeholder
-        </div>
-
+        <div class="service-title">placeholder</div>
+        <div class="service-desc">placeholder</div>
       </div>
-
-
-      <!-- ===== SHEET PLACEHOLDER ===== -->
 
       <div class="service-item" data-category="sheets">
-
         <div class="guide-category">REFERENCE SHEET</div>
-
-        <div class="service-title">
-          placeholder
-        </div>
-
-        <div class="service-desc">
-          placeholder
-        </div>
-
+        <div class="service-title">placeholder</div>
+        <div class="service-desc">placeholder</div>
       </div>
 
-
-      <!-- ===== AO FLEET MACRO ===== -->
-
       <div class="service-item" data-category="macros">
-
         <div class="guide-category">MACRO</div>
-
-        <div class="service-title">
-          AO Fleet Macro
-        </div>
-
+        <div class="service-title">AO Fleet Macro</div>
         <div class="service-desc">
-
-          Automates fleet repair &amp; resupply.
-          Windows only.
-
-          <a
-            href="https://github.com/fewerrelevent/ArcaneOdyssey-FleetMacro/releases/tag/v.1"
-            download
-            rel="noopener noreferrer"
-            class="resource-link"
-          >
-            Download Macro
-          </a>
-
-          <span
-            style="
-              display: block;
-              font-size: 12px;
-              color: #64748b;
-              margin-top: 6px;
-            "
-          >
-            Windows WILL show a virus/do you trust this file, ignore it, and click Run Anyway.
-          </span>
-
+          Automates fleet repair &amp; resupply. Windows only.
+          <a href="https://github.com/fewerrelevent/ArcaneOdyssey-FleetMacro/releases/tag/v.1" target="_blank" rel="noopener noreferrer" class="resource-link">View on GitHub</a>
+          <span style="display:block; font-size:12px; color:#64748b; margin-top:6px;">Windows WILL show a virus/do you trust this file warning — click "More info" → "Run anyway."</span>
         </div>
-
       </div>
 
     </div>
   </section>
-
 
   <!-- ===== COMMUNITY RESOURCES / PARTNER SERVERS ===== -->
   <section class="services-section" id="resources">
-
     <h2>Community Resources</h2>
-
     <div class="services-grid">
 
-
-      <!-- ===== LUCK CENTRAL ===== -->
-
       <div class="service-item">
-
-        <img
-          src="luck-central.png"
-          alt="Luck Central logo"
-          class="resource-logo"
-        >
-
-        <div class="service-title">
-          Luck Central
-        </div>
-
+        <img src="luck-central.png" alt="Luck Central logo" class="resource-logo">
+        <div class="service-title">Luck Central</div>
         <div class="service-desc">
-
           The premier server for Arcane Odyssey Services.
-
-          <span class="resource-blurb">
-            <a
-              href="https://discord.gg/zP4FgfhDEM"
-              target="_blank"
-              rel="noopener"
-              class="resource-link"
-            >
-              Join Luck Central
-            </a>
-          </span>
-
+          <span class="resource-blurb"><a href="https://discord.gg/zP4FgfhDEM" target="_blank" rel="noopener" class="resource-link">Join Luck Central</a></span>
         </div>
-
       </div>
 
-
-      <!-- ===== OFFICIAL WIKI ===== -->
-
       <div class="service-item">
-
-        <img
-          src="wiki.png"
-          alt="Arcane Odyssey Wiki logo"
-          class="resource-logo"
-        >
-
-        <div class="service-title">
-          Official Wiki
-        </div>
-
+        <img src="wiki.png" alt="Arcane Odyssey Wiki logo" class="resource-logo">
+        <div class="service-title">Official Wiki</div>
         <div class="service-desc">
-
           Item lists, mechanics, and FAQs.
-
           <span class="resource-blurb">
-
-            <a
-              href="https://roblox-arcane-odyssey.fandom.com/wiki/Arcane_Odyssey_Wiki"
-              target="_blank"
-              rel="noopener"
-              class="resource-link"
-            >
-              Visit Wiki
-            </a>
-
-            <a
-              href="https://discord.gg/qHRzBkaDvS"
-              target="_blank"
-              rel="noopener"
-              class="resource-link"
-            >
-              Join Wiki Discord
-            </a>
-
+            <a href="https://roblox-arcane-odyssey.fandom.com/wiki/Arcane_Odyssey_Wiki" target="_blank" rel="noopener" class="resource-link">Visit Wiki</a>
+            <a href="https://discord.gg/qHRzBkaDvS" target="_blank" rel="noopener" class="resource-link">Join Wiki Discord</a>
           </span>
-
         </div>
-
       </div>
 
-
-      <!-- ===== PARTNER PLACEHOLDER ===== -->
-
       <div class="service-item">
-
-        <div class="service-title">
-          Partner Server: Name Here
-        </div>
-
+        <div class="service-title">Partner Server: Name Here</div>
         <div class="service-desc">
-
           Short description of what this server offers.
-
-          <span class="resource-blurb">
-
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener"
-              class="resource-link"
-            >
-              Join Server
-            </a>
-
-          </span>
-
+          <span class="resource-blurb"><a href="#" target="_blank" rel="noopener" class="resource-link">Join Server</a></span>
         </div>
-
       </div>
 
-
-      <!-- ===== PARTNER PLACEHOLDER ===== -->
-
       <div class="service-item">
-
-        <div class="service-title">
-          Partner Server: Name Here
-        </div>
-
+        <div class="service-title">Partner Server: Name Here</div>
         <div class="service-desc">
-
           Short description of what this server offers.
-
-          <span class="resource-blurb">
-
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener"
-              class="resource-link"
-            >
-              Join Server
-            </a>
-
-          </span>
-
+          <span class="resource-blurb"><a href="#" target="_blank" rel="noopener" class="resource-link">Join Server</a></span>
         </div>
-
       </div>
 
     </div>
   </section>
-
 
   <!-- ===== DISCORD CTA SECTION ===== -->
   <section class="discord-section">
-
     <div class="discord-inner">
-
       <div class="discord-icon-wrap">
-
-        <svg
-          class="discord-logo-svg"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg class="discord-logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
         </svg>
-
       </div>
-
-      <h2 class="discord-heading">
-        Join the Community
-      </h2>
-
-      <p class="discord-sub">
-        Trade smarter with live value updates, trusted middlemen,
-        and hundreds of active traders..
-      </p>
-
-      <a
-        href="https://discord.gg/AGWXYeU2fC"
-        target="_blank"
-        class="discord-cta-btn"
-      >
+      <h2 class="discord-heading">Join the Community</h2>
+      <p class="discord-sub">Trade smarter with live value updates, trusted middlemen, and hundreds of active traders..</p>
+      <a href="https://discord.gg/AGWXYeU2fC" target="_blank" class="discord-cta-btn">
         <span>Join The Paramount Exchange</span>
-
-        <svg
-          class="btn-arrow"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-
+        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
-      <p class="discord-member-count">
-        <span class="pulse-dot"></span>
-        Active community on Discord
-      </p>
-
+      <p class="discord-member-count"><span class="pulse-dot"></span>Active community on Discord</p>
     </div>
-
   </section>
 
-
   <script>
-
     /* ===== PARALLAX ===== */
-
     const hero = document.querySelector('.hero');
     const services = document.querySelectorAll('.services-section');
-
     window.addEventListener('scroll', () => {
-
       const scrollY = window.scrollY;
-
-      if (hero) {
-        hero.style.backgroundPosition = `center ${scrollY * 0.5}px`;
-      }
-
-      services.forEach(s => {
-        s.style.backgroundPosition = `center ${scrollY * 0.2}px`;
-      });
-
+      if (hero) hero.style.backgroundPosition = `center ${scrollY * 0.5}px`;
+      services.forEach(s => s.style.backgroundPosition = `center ${scrollY * 0.2}px`);
     });
-
 
     /* ===== SERVICE CARD SCROLL ANIMATIONS ===== */
-
     const cards = document.querySelectorAll('.service-item');
+    cards.forEach((card, i) => card.style.setProperty('--stagger', i));
 
-    cards.forEach((card, i) => {
-      card.style.setProperty('--stagger', i);
-    });
-
-    const cardObserver = new IntersectionObserver(
-      (entries) => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-
-            const delay =
-              parseInt(
-                entry.target.style.getPropertyValue('--stagger')
-              ) * 70;
-
-            setTimeout(() => {
-              entry.target.classList.add('card-visible');
-            }, delay);
-
-            cardObserver.unobserve(entry.target);
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
-      }
-    );
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.style.getPropertyValue('--stagger')) * 70;
+          setTimeout(() => entry.target.classList.add('card-visible'), delay);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     cards.forEach(card => cardObserver.observe(card));
 
-
     /* ===== HAMBURGER MENU ===== */
-
-    document
-      .getElementById("navHamburger")
-      .addEventListener("click", function() {
-
-        this.classList.toggle("open");
-
-        document
-          .getElementById("navLinks")
-          .classList.toggle("open");
-
-      });
-
-
-    /* ===== GUIDE FILTERING ===== */
-
-    const filterBtns =
-      document.querySelectorAll('#filterBar .filter-btn');
-
-    const guideItems =
-      document.querySelectorAll('#guidesGrid .service-item');
-
-    filterBtns.forEach(btn => {
-
-      btn.addEventListener('click', () => {
-
-        filterBtns.forEach(b =>
-          b.classList.remove('active')
-        );
-
-        btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-
-        guideItems.forEach(item => {
-
-          const matches =
-            filter === 'all' ||
-            item.dataset.category === filter;
-
-          item.classList.toggle(
-            'hidden-item',
-            !matches
-          );
-
-        });
-
-      });
-
+    document.getElementById("navHamburger").addEventListener("click", function() {
+      this.classList.toggle("open");
+      document.getElementById("navLinks").classList.toggle("open");
     });
 
+    /* ===== GUIDE FILTERING ===== */
+    const filterBtns = document.querySelectorAll('#filterBar .filter-btn');
+    const guideItems = document.querySelectorAll('#guidesGrid .service-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        guideItems.forEach(item => {
+          const matches = filter === 'all' || item.dataset.category === filter;
+          item.classList.toggle('hidden-item', !matches);
+        });
+      });
+    });
   </script>
 
 </body>

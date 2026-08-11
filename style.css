@@ -669,6 +669,10 @@ td:first-child {
   box-shadow: 0 12px 28px rgba(88,101,242,0.25);
 }
 
+.service-item.hidden-item {
+  display: none;
+}
+
 .service-title {
   font-family: 'Rajdhani', sans-serif;
   font-size: 20px;

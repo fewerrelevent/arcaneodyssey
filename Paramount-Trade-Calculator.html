@@ -9,12 +9,12 @@
 
 <title>Paramount Trade Calculator</title>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap");
+/* fonts already loaded via style.css (Poppins/Nunito) — no separate @import needed here */
 
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1b1f2d);
-  color: #e5e7eb;
+  font-family: 'Nunito', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   padding: 80px 0 20px;
   user-select: none;
   margin: 0;
@@ -32,23 +32,7 @@ body {
   width: 100%;
 }
 
-h1 {
-  font-family: 'Rajdhani', sans-serif;
-  text-align: center;
-  margin: 0 0 8px 0;
-  font-size: clamp(1.2em, 2.5vw, 2em);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-h1::after {
-  content: "";
-  display: block;
-  width: 120px;
-  height: 3px;
-  background: linear-gradient(90deg, #6366f1, #22d3ee);
-  margin: 6px auto 0;
-  border-radius: 3px;
-}
+/* h1 styling (font, underline mark) comes from style.css — not redeclared here */
 
 .search-container { margin-bottom: 6px; width: clamp(280px, 90vw, 560px); }
 input[type="text"] {
@@ -56,20 +40,20 @@ input[type="text"] {
   padding: 10px;
   font-size: 1.1em;
   border-radius: 6px;
-  border: 1px solid #1e293b;
-  background: #020617;
-  color: #e5e7eb;
+  border: 1px solid var(--border);
+  background: #0d0f15;
+  color: var(--text);
   box-sizing: border-box;
 }
 input[type="text"]:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 1px #6366f1;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
 }
 
 .item-list {
   width: clamp(280px, 90vw, 560px);
-  background: linear-gradient(180deg,#020617,#020617cc);
+  background: #171921;
   margin-bottom: 8px;
   padding: 6px;
   border-radius: 12px;
@@ -91,13 +75,13 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #1e293b;
+  background: var(--card);
   position: relative;
   transition: transform 0.1s, box-shadow 0.15s;
 }
 .item:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 8px #6366f1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 .item img {
   border-radius: 0;
@@ -123,7 +107,7 @@ input[type="text"]:focus {
   display: grid;
   grid-template-columns: repeat(4, clamp(70px, 7vw, 110px));
   gap: clamp(4px, 0.5vw, 10px);
-  background: linear-gradient(90deg,#111827,#0f172a);
+  background: #191c26;
   padding: clamp(6px, 0.6vw, 12px);
   border-radius: 12px;
   /* rows grow automatically as cells are added */
@@ -134,8 +118,8 @@ input[type="text"]:focus {
   overflow: hidden;
   width: clamp(70px, 7vw, 110px);
   height: clamp(70px, 7vw, 110px);
-  background: #020617cc;
-  border: 2px dashed #1e293b;
+  background: rgba(13,15,21,0.8);
+  border: 2px dashed var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,7 +128,7 @@ input[type="text"]:focus {
   position: relative;
   transition: background 0.15s, border-color 0.15s;
 }
-.grid-cell.highlight { background: #334155; border-color: #6366f1; }
+.grid-cell.highlight { background: #262b38; border-color: var(--accent); }
 .grid-cell img {
   border-radius: 0;
   width: 100%;
@@ -170,7 +154,7 @@ input[type="text"]:focus {
   top: 2px;
   right: 8px;
   font-size: 18px;
-  color: red;
+  color: var(--red);
   cursor: pointer;
   user-select: none;
 }
@@ -180,13 +164,13 @@ input[type="text"]:focus {
   padding: 10px 16px;
   font-size: 1.1em;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(180deg,#1e293b,#0f172a);
-  color: #e5e7eb;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
   cursor: pointer;
   transition: background 0.2s, transform 0.05s;
 }
-#resetTrade:hover { background: linear-gradient(180deg,#334155,#1e293b); }
+#resetTrade:hover { background: #262b38; }
 #resetTrade:active { transform: translateY(1px); }
 
 .difference {
@@ -198,8 +182,8 @@ input[type="text"]:focus {
 
 .tooltip {
   position: fixed;
-  background: rgba(30,41,59,0.95);
-  color: #e5e7eb;
+  background: rgba(28,32,41,0.95);
+  color: var(--text);
   padding: 6px 10px;
   border-radius: 6px;
   pointer-events: none;
@@ -213,11 +197,11 @@ input[type="text"]:focus {
 #contextMenu {
   position: absolute;
   display: none;
-  background: linear-gradient(180deg,#1e293b,#0f172a);
-  border: 1px solid #334155;
-  color: #e5e7eb;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
   padding: 12px;
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
   z-index: 10000;
   min-width: 180px;
@@ -227,9 +211,9 @@ input[type="text"]:focus {
   margin-left: 5px;
   padding: 4px 6px;
   border-radius: 6px;
-  border: 1px solid #334155;
-  background: #020617;
-  color: #e5e7eb;
+  border: 1px solid var(--border);
+  background: #0d0f15;
+  color: var(--text);
 }
 #contextMenu button {
   padding: 6px 10px;
@@ -237,29 +221,29 @@ input[type="text"]:focus {
   margin-right: 5px;
   border-radius: 6px;
   border: none;
-  background: linear-gradient(180deg,#334155,#1e293b);
-  color: #e5e7eb;
+  background: #262b38;
+  color: var(--text);
   cursor: pointer;
   transition: background 0.2s;
 }
-#contextMenu button:hover { background: linear-gradient(180deg,#6366f1,#22d3ee); }
+#contextMenu button:hover { background: var(--accent); }
 
 .info-panel {
   position: fixed;
   top: 120px;
   right: 20px;
   width: 220px;
-  background: linear-gradient(180deg,#1e293b,#0f172a);
-  border: 1px solid #334155;
-  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 15px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
   font-size: 0.95em;
-  color: #e5e7eb;
+  color: var(--text);
   line-height: 1.4em;
   z-index: 5000;
 }
-.info-panel strong { color: #6366f1; }
+.info-panel strong { color: var(--accent); }
 
 .trade-side {
   min-width: unset;
@@ -280,10 +264,10 @@ input[type="text"]:focus {
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  color: #94a3b8;
+  color: var(--text-dim);
   user-select: none;
 }
-.close-info:hover { color: #ef4444; }
+.close-info:hover { color: var(--red); }
 
 @media (max-width: 768px) {
   .trade-container {
@@ -392,11 +376,11 @@ input[type="text"]:focus {
     <div class="bottom-row">
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
         <button id="resetTrade">Reset Trade</button>
-        <button id="shareTradeBtn" style="background:#1e293b;border:1px solid #6366f1;color:#6366f1;border-radius:12px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;">
+        <button id="shareTradeBtn" style="background:#1c2029;border:1px solid #3b82f6;color:#3b82f6;border-radius:8px;padding:8px 16px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share Trade
         </button>
-        <span id="shareFeedback" style="font-size:12px;color:#22c55e;opacity:0;transition:opacity 0.3s ease;font-family:'DM Sans',sans-serif;">Link copied!</span>
+        <span id="shareFeedback" style="font-size:12px;color:#22c55e;opacity:0;transition:opacity 0.3s ease;font-family:'Nunito',sans-serif;">Link copied!</span>
       </div>
     </div>
   </div>
@@ -754,7 +738,7 @@ function updateTotals() {
 
   const diff = t2 - t1;
   difference.textContent = (diff > 0 ? "+" : "") + diff.toLocaleString();
-  difference.style.color = diff > 0 ? "#22c55e" : diff < 0 ? "#ef4444" : "#e5e7eb";
+  difference.style.color = diff > 0 ? "#22c55e" : diff < 0 ? "#ef4444" : "#e4e6ec";
 }
 
 /* ===== RESET ===== */
